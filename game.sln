@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "game", "game.vcxproj", "{BFFB4932-38C9-421A-B9FB-1C0C4F06FAC7}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug Alpha|Win32 = Debug Alpha|Win32
+		Debug|Win32 = Debug|Win32
+		Release Alpha|Win32 = Release Alpha|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BFFB4932-38C9-421A-B9FB-1C0C4F06FAC7}.Debug Alpha|Win32.ActiveCfg = Debug Alpha|Win32
+		{BFFB4932-38C9-421A-B9FB-1C0C4F06FAC7}.Debug Alpha|Win32.Build.0 = Debug Alpha|Win32
+		{BFFB4932-38C9-421A-B9FB-1C0C4F06FAC7}.Debug|Win32.ActiveCfg = Release|Win32
+		{BFFB4932-38C9-421A-B9FB-1C0C4F06FAC7}.Debug|Win32.Build.0 = Release|Win32
+		{BFFB4932-38C9-421A-B9FB-1C0C4F06FAC7}.Release Alpha|Win32.ActiveCfg = Release Alpha|Win32
+		{BFFB4932-38C9-421A-B9FB-1C0C4F06FAC7}.Release Alpha|Win32.Build.0 = Release Alpha|Win32
+		{BFFB4932-38C9-421A-B9FB-1C0C4F06FAC7}.Release|Win32.ActiveCfg = Release|Win32
+		{BFFB4932-38C9-421A-B9FB-1C0C4F06FAC7}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
