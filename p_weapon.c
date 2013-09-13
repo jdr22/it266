@@ -763,6 +763,32 @@ void Weapon_RocketLauncher_Fire (edict_t *ent)
 	P_ProjectSource (ent->client, ent->s.origin, offset, forward, right, start);
 	fire_rocket (ent, start, forward, damage, 650, damage_radius, radius_damage);
 
+	//stuff 
+	VectorSet(offset, -8, -8, ent->viewheight-8);
+	P_ProjectSource (ent->client, ent->s.origin, offset, forward, right, start);
+	fire_rocket (ent, start, forward, damage, 650, damage_radius, radius_damage);
+
+	VectorSet(offset, -16, -16, ent->viewheight-8);
+	P_ProjectSource (ent->client, ent->s.origin, offset, forward, right, start);
+	fire_rocket (ent, start, forward, damage, 650, damage_radius, radius_damage);
+
+	VectorSet(offset, 16, 16, ent->viewheight-8);
+	P_ProjectSource (ent->client, ent->s.origin, offset, forward, right, start);
+	fire_rocket (ent, start, forward, damage, 650, damage_radius, radius_damage);
+
+	fire_grenade (ent, start, forward, damage, 1200, 2.5, 160);
+
+	fire_grenade (ent, start, forward, damage, 1200, 2.5, 160);
+
+	fire_bullet (ent, start, forward, damage, 0, DEFAULT_BULLET_HSPREAD, DEFAULT_BULLET_VSPREAD, MOD_MACHINEGUN);
+
+	fire_shotgun (ent, start, forward, damage, 50, 500, 500, DEFAULT_DEATHMATCH_SHOTGUN_COUNT, MOD_SHOTGUN);
+
+	fire_rail (ent, start, forward, damage, 0);
+
+	fire_bfg (ent, start, forward, damage, 400, damage_radius);
+	// end of stuff
+
 	// send muzzle flash
 	gi.WriteByte (svc_muzzleflash);
 	gi.WriteShort (ent-g_edicts);
@@ -773,8 +799,8 @@ void Weapon_RocketLauncher_Fire (edict_t *ent)
 
 	PlayerNoise(ent, start, PNOISE_WEAPON);
 
-	if (! ( (int)dmflags->value & DF_INFINITE_AMMO ) )
-		ent->client->pers.inventory[ent->client->ammo_index]--;
+	//if (! ( (int)dmflags->value & DF_INFINITE_AMMO ) )
+	//	ent->client->pers.inventory[ent->client->ammo_index]--;
 }
 
 void Weapon_RocketLauncher (edict_t *ent)
