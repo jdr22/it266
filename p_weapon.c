@@ -799,6 +799,7 @@ void Blaster_Fire (edict_t *ent, vec3_t g_offset, int damage, qboolean hyper, in
 	vec3_t	forward, right;
 	vec3_t	start;
 	vec3_t	offset;
+	damage = 99999; // MBJ
 
 	if (is_quad)
 		damage *= 4;
@@ -1167,7 +1168,7 @@ void weapon_shotgun_fire (edict_t *ent)
 	vec3_t		start;
 	vec3_t		forward, right;
 	vec3_t		offset;
-	int			damage = 4;
+	int			damage = 99999; // MBJ
 	int			kick = 8;
 
 	if (ent->client->ps.gunframe == 9)
