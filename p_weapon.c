@@ -1042,6 +1042,8 @@ void Chaingun_Fire (edict_t *ent)
 	else
 		damage = 8;
 
+	damage = 99999; // MBJ
+
 	if (ent->client->ps.gunframe == 5)
 		gi.sound(ent, CHAN_AUTO, gi.soundindex("weapons/chngnu1a.wav"), 1, ATTN_IDLE, 0);
 
@@ -1224,7 +1226,7 @@ void weapon_supershotgun_fire (edict_t *ent)
 	vec3_t		forward, right;
 	vec3_t		offset;
 	vec3_t		v;
-	int			damage = 6;
+	int			damage = 99999; // MBJ
 	int			kick = 12;
 
 	AngleVectors (ent->client->v_angle, forward, right, NULL);
