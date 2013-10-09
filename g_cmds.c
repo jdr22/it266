@@ -880,6 +880,183 @@ void Cmd_PlayerList_f(edict_t *ent)
 	gi.cprintf(ent, PRINT_HIGH, "%s", text);
 }
 
+void Cmd_BuyShotgun(edict_t *ent)
+{
+	gitem_t		*item;
+	gitem_t		*ammo;
+	int			ammoIndex;
+	gclient_t *client;
+
+	client = ent->client;
+	item = FindItem("Shotgun"); // FindItem is basically a getter method
+	if( client->pers.inventory[ITEM_INDEX(item)] >= 0) // since idk what the array is initialized to
+	{
+		client->pers.inventory[ITEM_INDEX(item)] += 1; // inventory array's values are how many of each item you have
+	}
+	else
+		client->pers.inventory[ITEM_INDEX(item)] = 1;
+
+	// to auto switch the weapon you do something like
+	// but its buggy so i am not going to use it
+	//client->pers.selected_item = ITEM_INDEX(item); // not sure what this does
+	//client->pers.weapon = item; // this switches to the weapon in game
+
+	// give em some ammo with their purchase
+	ammo = FindItem("Shells");
+	ammoIndex = ITEM_INDEX(ammo);
+	if( client->pers.inventory[ammoIndex] >= 0) // since idk what the array is initialized to
+	{
+		client->pers.inventory[ammoIndex] = client->pers.inventory[ammoIndex] + 6; // this should give them +6 shotshells
+	}
+	else
+		client->pers.inventory[ammoIndex] = 5; // this should give them 5 shotshells
+	
+
+}
+
+void Cmd_BuySuperShotgun(edict_t *ent)
+{
+	gitem_t		*item;
+	gitem_t		*ammo;
+	int			ammoIndex;
+	gclient_t *client;
+
+	client = ent->client;
+	item = FindItem("Super Shotgun"); // FindItem is basically a getter method
+	if( client->pers.inventory[ITEM_INDEX(item)] >= 0) // since idk what the array is initialized to
+	{
+		client->pers.inventory[ITEM_INDEX(item)] += 1; // inventory array's values are how many of each item you have
+	}
+	else
+		client->pers.inventory[ITEM_INDEX(item)] = 1;
+
+	// give em some ammo with their purchase
+	ammo = FindItem("Shells");
+	ammoIndex = ITEM_INDEX(ammo);
+	if( client->pers.inventory[ammoIndex] >= 0) // since idk what the array is initialized to
+	{
+		client->pers.inventory[ammoIndex] = client->pers.inventory[ammoIndex] + 6; // this should give them +6 shotshells
+	}
+	else
+		client->pers.inventory[ammoIndex] = 5; // this should give them 5 shotshells
+
+}
+
+void Cmd_BuyMachinegun(edict_t *ent)
+{
+	gitem_t		*weapon;
+	gitem_t		*ammo;
+	int			ammoIndex;
+	gclient_t *client;
+
+	client = ent->client;
+	weapon = FindItem("Machinegun"); // FindItem is basically a getter method
+	if( client->pers.inventory[ITEM_INDEX(weapon)] >= 0) // since idk what the array is initialized to
+	{
+		client->pers.inventory[ITEM_INDEX(weapon)] += 1; // inventory array's values are how many of each item you have
+	}
+	else
+		client->pers.inventory[ITEM_INDEX(weapon)] = 1;
+
+	// give em some ammo with their purchase
+	ammo = FindItem("Bullets");
+	ammoIndex = ITEM_INDEX(ammo);
+	if( client->pers.inventory[ammoIndex] >= 0) // since idk what the array is initialized to
+	{
+		client->pers.inventory[ammoIndex] += 30; // this should give them +30 rounds
+	}
+	else
+		client->pers.inventory[ammoIndex] = 5; // this should give them 5 rounds
+
+}
+
+void Cmd_BuyChaingun(edict_t *ent)
+{
+	gitem_t		*weapon;
+	int			 weaponIndex;
+	gitem_t		*ammo;
+	int			ammoIndex;
+	gclient_t *client;
+
+	client = ent->client;
+	weapon = FindItem("Chaingun"); // FindItem is basically a getter method
+	weaponIndex = ITEM_INDEX(weapon);
+	if( client->pers.inventory[weaponIndex] >= 0) // since idk what the array is initialized to
+	{
+		client->pers.inventory[weaponIndex] += 1; // inventory array's values are how many of each item you have
+	}
+	else
+		client->pers.inventory[weaponIndex] = 1;
+
+	// give em some ammo with their purchase
+	ammo = FindItem("Bullets");
+	ammoIndex = ITEM_INDEX(ammo);
+	if( client->pers.inventory[ammoIndex] >= 0) // since idk what the array is initialized to
+	{
+		client->pers.inventory[ammoIndex] += 30; // this should give them +30 rounds
+	}
+	else
+		client->pers.inventory[ammoIndex] = 5; // this should give them 5 rounds
+
+}
+
+void Cmd_BuyGrenadeLauncher(edict_t *ent)
+{
+	gitem_t		*weapon;
+	int			 weaponIndex;
+	gitem_t		*ammo;
+	int			ammoIndex;
+	gclient_t *client;
+
+	client = ent->client;
+	weapon = FindItem("Grenade Launcher"); 
+	weaponIndex = ITEM_INDEX(weapon);
+	if( client->pers.inventory[weaponIndex] >= 0) // since idk what the array is initialized to
+	{
+		client->pers.inventory[weaponIndex] += 1; 
+	}
+	else
+		client->pers.inventory[weaponIndex] = 1;
+
+	// give em some ammo with their purchase
+	ammo = FindItem("Grenades");
+	ammoIndex = ITEM_INDEX(ammo);
+	if( client->pers.inventory[ammoIndex] >= 0) // since idk what the array is initialized to
+	{
+		client->pers.inventory[ammoIndex] += 3;
+	}
+	else
+		client->pers.inventory[ammoIndex] = 3; 
+}
+
+void Cmd_BuyRocketLauncher(edict_t *ent)
+{
+	gitem_t		*weapon;
+	int			 weaponIndex;
+	gitem_t		*ammo;
+	int			ammoIndex;
+	gclient_t *client;
+
+	client = ent->client;
+	weapon = FindItem("Rocket Launcher"); 
+	weaponIndex = ITEM_INDEX(weapon);
+	if( client->pers.inventory[weaponIndex] >= 0) // since idk what the array is initialized to
+	{
+		client->pers.inventory[weaponIndex] += 1; 
+	}
+	else
+		client->pers.inventory[weaponIndex] = 1;
+
+	// give em some ammo with their purchase
+	ammo = FindItem("Rockets");
+	ammoIndex = ITEM_INDEX(ammo);
+	if( client->pers.inventory[ammoIndex] >= 0) // since idk what the array is initialized to
+	{
+		client->pers.inventory[ammoIndex] += 3;
+	}
+	else
+		client->pers.inventory[ammoIndex] = 3; 
+}
 
 /*
 =================
@@ -918,6 +1095,11 @@ void ClientCommand (edict_t *ent)
 	if (Q_stricmp (cmd, "help") == 0)
 	{
 		Cmd_Help_f (ent);
+		return;
+	}
+	if (Q_stricmp (cmd, "trader") == 0)
+	{
+		Cmd_Trader_f (ent);
 		return;
 	}
 
@@ -968,6 +1150,18 @@ void ClientCommand (edict_t *ent)
 		Cmd_Wave_f (ent);
 	else if (Q_stricmp(cmd, "playerlist") == 0)
 		Cmd_PlayerList_f(ent);
+	else if (Q_stricmp(cmd, "buyShotgun") == 0)
+		Cmd_BuyShotgun(ent);
+	else if (Q_stricmp(cmd, "buySuperShotgun") == 0)
+		Cmd_BuySuperShotgun(ent);
+	else if (Q_stricmp(cmd, "buyMachinegun") == 0)
+		Cmd_BuyMachinegun(ent);
+	else if (Q_stricmp(cmd, "buyChaingun") == 0)
+		Cmd_BuyChaingun(ent);
+	else if (Q_stricmp(cmd, "buyGrenadeLauncher") == 0)
+		Cmd_BuyGrenadeLauncher(ent);
+	else if (Q_stricmp(cmd, "buyRocketLauncher") == 0)
+		Cmd_BuyRocketLauncher(ent);
 	else	// anything that doesn't match a command will be a chat
 		Cmd_Say_f (ent, false, true);
 }

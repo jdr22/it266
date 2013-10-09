@@ -284,8 +284,9 @@ void HelpComputer (edict_t *ent)
 {
 	char	string[1024];
 	char	*sk;
+	char	*buyShotgun;
 
-	if (skill->value == 0)
+	/*if (skill->value == 0)
 		sk = "easy";
 	else if (skill->value == 1)
 		sk = "medium";
@@ -293,18 +294,67 @@ void HelpComputer (edict_t *ent)
 		sk = "hard";
 	else
 		sk = "hard+";
+	*/
+
+	sk = "Quaking Floor Trader Menu";
+	buyShotgun = "Shotgun $100 - press r or command buyShotgun";
 
 	// send the layout
 	Com_sprintf (string, sizeof(string),
-		"xv 32 yv 8 picn help "			// background
-		"xv 202 yv 12 string2 \"%s\" "		// skill
+		//"xv 32 yv 8 picn help "			// background
+		//"xv 202 yv 12 string2 \"%s\" "		// skill
+		"xv 0 yv 0 string2 \"%s\" "		// title
+		//"xv 0 yv 24 cstring2 \"%s\" "		// level name
 		"xv 0 yv 24 cstring2 \"%s\" "		// level name
 		"xv 0 yv 54 cstring2 \"%s\" "		// help 1
 		"xv 0 yv 110 cstring2 \"%s\" "		// help 2
 		"xv 50 yv 164 string2 \" kills     goals    secrets\" "
 		"xv 50 yv 172 string2 \"%3i/%3i     %i/%i       %i/%i\" ", 
 		sk,
-		level.level_name,
+		//level.level_name,
+		buyShotgun,
+		game.helpmessage1,
+		game.helpmessage2,
+		level.killed_monsters, level.total_monsters, 
+		level.found_goals, level.total_goals,
+		level.found_secrets, level.total_secrets);
+
+	gi.WriteByte (svc_layout);
+	gi.WriteString (string);
+	gi.unicast (ent, true);
+}
+
+/*
+=================
+Cmd_Trader_f
+
+Display the trader menu
+=================
+*/
+void Cmd_Trader_f (edict_t *ent)
+{
+	
+	char	string[1024];
+	char	*sk;
+	char	*buyShotgun;
+
+	sk = "Quaking Floor Trader Menu";
+	buyShotgun = "Shotgun $100 - press r or command buyShotgun";
+
+	// send the layout
+	Com_sprintf (string, sizeof(string),
+		//"xv 32 yv 8 picn help "			// background
+		//"xv 202 yv 12 string2 \"%s\" "		// skill
+		"xv 0 yv 0 string2 \"%s\" "		// title
+		//"xv 0 yv 24 cstring2 \"%s\" "		// level name
+		"xv 0 yv 24 cstring2 \"%s\" "		// level name
+		"xv 0 yv 54 cstring2 \"%s\" "		// help 1
+		"xv 0 yv 110 cstring2 \"%s\" "		// help 2
+		"xv 50 yv 164 string2 \" kills     goals    secrets\" "
+		"xv 50 yv 172 string2 \"%3i/%3i     %i/%i       %i/%i\" ", 
+		sk,
+		//level.level_name,
+		buyShotgun,
 		game.helpmessage1,
 		game.helpmessage2,
 		level.killed_monsters, level.total_monsters, 
