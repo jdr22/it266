@@ -744,6 +744,8 @@ void Weapon_RocketLauncher_Fire (edict_t *ent)
 	int		damage;
 	float	damage_radius;
 	int		radius_damage;
+	// stuff i added below
+	gclient_t *client;
 
 	damage = 100 + (int)(random() * 20.0);
 	radius_damage = 120;
@@ -761,7 +763,15 @@ void Weapon_RocketLauncher_Fire (edict_t *ent)
 
 	VectorSet(offset, 8, 8, ent->viewheight-8);
 	P_ProjectSource (ent->client, ent->s.origin, offset, forward, right, start);
-	fire_rocket (ent, start, forward, damage, 650, damage_radius, radius_damage);
+
+	client = ent->client;
+	if( client->pers.playerClass == CLASS_DEMO )
+	{
+		fire_rocket (ent, start, forward, damage * 8, 650, damage_radius, radius_damage * 8);
+		fire_rocket (ent, start, forward, damage * 8, 650, damage_radius, radius_damage * 8);
+	}
+	else
+		fire_rocket (ent, start, forward, damage, 650, damage_radius, radius_damage);
 
 	// send muzzle flash
 	gi.WriteByte (svc_muzzleflash);

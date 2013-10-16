@@ -261,6 +261,28 @@ void ED_CallSpawn (edict_t *ent)
 	spawn_t	*s;
 	gitem_t	*item;
 	int		i;
+	float temp; // i added this
+
+	/*// stuff i added
+		if(!strcmp(ent->classname, "ammo_shells"))
+		{
+			temp = deathmatch->value;
+			deathmatch->value = 0;
+			SP_monster_soldier_light(ent);
+			deathmatch->value = temp;
+			return;
+		}
+		*/
+	/* DONT DO THIS. SERIOUSLY DONT
+	if(1)
+	{
+			temp = deathmatch->value;
+			deathmatch->value = 0;
+			SP_monster_soldier_light(ent);
+			deathmatch->value = temp;
+			return;
+	}*/
+		
 
 	if (!ent->classname)
 	{

@@ -880,6 +880,82 @@ void Cmd_PlayerList_f(edict_t *ent)
 	gi.cprintf(ent, PRINT_HIGH, "%s", text);
 }
 
+void Cmd_SetClass(edict_t *ent)
+{
+	int		i;
+	gclient_t *client;
+
+	i = atoi (gi.argv(1));
+	client = ent->client;
+
+	if(client->pers.playerClass == 1 || client->pers.playerClass == 2 || client->pers.playerClass == 3)
+	{
+		gi.cprintf (ent, PRINT_CHAT, "You already chose a class. Kill yourself if you want to pick a new class.\n");
+		return;
+	}
+
+	if(i == CLASS_SUPPORT )
+	{
+		gi.cprintf (ent, PRINT_CHAT, "You are now support class\n");	
+		client->pers.playerClass = 1; // set current
+		client->pers.tierOneUpgradeLevel = 0; // no upgrades yet
+		client->pers.max_shells = 999;
+	}
+	else
+	if(i == CLASS_HEAVY )
+	{
+		gi.cprintf (ent, PRINT_CHAT, "You are now heavy class\n"); 
+		client->pers.playerClass = 2;
+		client->pers.tierOneUpgradeLevel = 0;
+		client->pers.max_bullets = 999;
+		ent->max_health = 300;
+		ent->health = ent->max_health;
+	}
+	else
+	if(i == CLASS_DEMO )
+	{
+		gi.cprintf (ent, PRINT_CHAT, "You are now demo class\n");
+		client->pers.playerClass = 3;
+		client->pers.tierOneUpgradeLevel = 0;
+		client->pers.max_grenades = 999;
+		client->pers.max_rockets = 999;
+	} 
+	else
+	{
+		gi.cprintf (ent, PRINT_CHAT, "Not a valid class choice\n");
+	}
+
+}
+
+void Cmd_PrintClass(edict_t *ent)
+{
+	gclient_t *client;
+	int i;
+
+	client = ent->client;
+	i = client->pers.playerClass;
+
+	if(i == CLASS_SUPPORT )
+	{
+		gi.cprintf (ent, PRINT_HIGH, "You are support class\n");
+		
+	}
+	else
+	if(i == CLASS_HEAVY )
+	{
+		gi.cprintf (ent, PRINT_HIGH, "You are heavy class\n");
+	}
+	else
+	if(i == CLASS_DEMO )
+	{
+		gi.cprintf (ent, PRINT_HIGH, "You are demo class\n");
+	} 
+	else
+	{
+		gi.cprintf (ent, PRINT_HIGH, "No Class\n");
+	}
+}
+
 void Cmd_BuyShotgun(edict_t *ent)
 {
 	gitem_t		*item;
@@ -1058,6 +1134,113 @@ void Cmd_BuyRocketLauncher(edict_t *ent)
 		client->pers.inventory[ammoIndex] = 3; 
 }
 
+void Cmd_BuyTierOne(edict_t *ent)
+{
+	if(ent->client->pers.playerClass == CLASS_SUPPORT)
+	{
+		Cmd_BuyShotgun(ent);
+	}
+	else
+	if( ent->client->pers.playerClass == CLASS_HEAVY)
+	{
+		Cmd_BuyMachinegun(ent);
+	}
+	else
+	if(ent->client->pers.playerClass == CLASS_DEMO)
+	{
+		Cmd_BuyGrenadeLauncher(ent);
+	}
+	else
+	{
+		gi.cprintf (ent, PRINT_CHAT, "You need to set your class first dummy!\n");
+	}
+}
+
+void Cmd_BuyTierTwo(edict_t *ent)
+{
+	if(ent->client->pers.playerClass == CLASS_SUPPORT)
+	{
+		Cmd_BuySuperShotgun(ent);
+	}
+	else
+	if( ent->client->pers.playerClass == CLASS_HEAVY)
+	{
+		Cmd_BuyChaingun(ent);
+	}
+	else
+	if(ent->client->pers.playerClass == CLASS_DEMO)
+	{
+		Cmd_BuyRocketLauncher(ent);
+	}
+	else
+	{
+		gi.cprintf (ent, PRINT_CHAT, "You need to set your class first dummy!\n");
+	}
+}
+
+void Cmd_BuyShells(edict_t *ent)
+{
+	gitem_t		*ammo;
+	int			ammoIndex;
+
+	ammo = FindItem("Shells");
+	ammoIndex = ITEM_INDEX(ammo);
+	ent->client->pers.inventory[ammoIndex] = 999; 
+}
+
+void Cmd_BuyBullets(edict_t *ent)
+{
+	gitem_t		*ammo;
+	int			ammoIndex;
+
+	ammo = FindItem("Bullets");
+	ammoIndex = ITEM_INDEX(ammo);
+	ent->client->pers.inventory[ammoIndex] = 999;
+}
+
+void Cmd_BuyGrenades(edict_t *ent)
+{
+	gitem_t		*ammo;
+	int			ammoIndex;
+
+	ammo = FindItem("Grenades");
+	ammoIndex = ITEM_INDEX(ammo);
+	ent->client->pers.inventory[ammoIndex] = 999;
+}
+
+void Cmd_BuyRockets(edict_t *ent)
+{
+	gitem_t		*ammo;
+	int			ammoIndex;
+
+	ammo = FindItem("Rockets");
+	ammoIndex = ITEM_INDEX(ammo);
+	ent->client->pers.inventory[ammoIndex] = 999;
+}
+
+void Cmd_BuyClassAmmo(edict_t *ent)
+{
+	if(ent->client->pers.playerClass == CLASS_SUPPORT)
+	{
+		Cmd_BuyShells(ent);
+	}
+	else
+	if( ent->client->pers.playerClass == CLASS_HEAVY)
+	{
+		Cmd_BuyBullets(ent);
+	}
+	else
+	if(ent->client->pers.playerClass == CLASS_DEMO)
+	{
+		Cmd_BuyGrenades(ent);
+		Cmd_BuyRockets(ent);
+	}
+	else
+	{
+		gi.cprintf (ent, PRINT_CHAT, "You need to set your class first dummy!\n");
+	}
+}
+
 /*
 =================
 ClientCommand
@@ -1150,6 +1333,10 @@ void ClientCommand (edict_t *ent)
 		Cmd_Wave_f (ent);
 	else if (Q_stricmp(cmd, "playerlist") == 0)
 		Cmd_PlayerList_f(ent);
+	else if (Q_stricmp(cmd, "setClass") == 0)
+		Cmd_SetClass(ent);
+	else if (Q_stricmp(cmd, "printClass") == 0)
+		Cmd_PrintClass(ent);
 	else if (Q_stricmp(cmd, "buyShotgun") == 0)
 		Cmd_BuyShotgun(ent);
 	else if (Q_stricmp(cmd, "buySuperShotgun") == 0)
@@ -1162,6 +1349,20 @@ void ClientCommand (edict_t *ent)
 		Cmd_BuyGrenadeLauncher(ent);
 	else if (Q_stricmp(cmd, "buyRocketLauncher") == 0)
 		Cmd_BuyRocketLauncher(ent);
+	else if (Q_stricmp(cmd, "buyTierOne") == 0)
+		Cmd_BuyTierOne(ent);
+	else if (Q_stricmp(cmd, "buyTierTwo") == 0)
+		Cmd_BuyTierTwo(ent);
+	else if (Q_stricmp(cmd, "buyShells") == 0)
+		Cmd_BuyShells(ent);
+	else if (Q_stricmp(cmd, "buyBullets") == 0)
+		Cmd_BuyBullets(ent);
+	else if (Q_stricmp(cmd, "buyGrenades") == 0)
+		Cmd_BuyGrenades(ent);
+	else if (Q_stricmp(cmd, "buyRockets") == 0)
+		Cmd_BuyRockets(ent);
+	else if (Q_stricmp(cmd, "buyClassAmmo") == 0)
+		Cmd_BuyClassAmmo(ent);
 	else	// anything that doesn't match a command will be a chat
 		Cmd_Say_f (ent, false, true);
 }

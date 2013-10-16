@@ -144,6 +144,8 @@ DeathmatchScoreboardMessage
 */
 void DeathmatchScoreboardMessage (edict_t *ent, edict_t *killer)
 {
+	// Default method
+	/*
 	char	entry[1024];
 	char	string[1400];
 	int		stringlength;
@@ -226,6 +228,122 @@ void DeathmatchScoreboardMessage (edict_t *ent, edict_t *killer)
 		strcpy (string + stringlength, entry);
 		stringlength += j;
 	}
+
+	gi.WriteByte (svc_layout);
+	gi.WriteString (string);
+	*/
+
+	// Hacked version to list my menu stuff
+	char	string[1024];
+	char* playerClass;
+	char* tierOneWeapon;
+	char* tierOneWeaponUpgradeLevel;
+	char* tierTwoWeapon;
+	char* tierTwoWeaponUpgradeLevel;
+	char* classAmmo;
+	int isNoClass;
+	
+	isNoClass = 0;
+
+	if(ent->client->pers.playerClass == CLASS_SUPPORT)
+	{
+		playerClass = "Class: Support (F2 for Support, F3 for Heavy, F4 for Demo)";
+		tierOneWeapon = "Tier 1: Shotgun (F5 to buy)";
+		tierTwoWeapon = "Tier 2: Super Shotgun (F6 to buy)";
+		classAmmo = "Class ammo: Shells (F7 to buy)";
+	}
+	else
+	if( ent->client->pers.playerClass == CLASS_HEAVY)
+	{
+		playerClass = "Class: Heavy (F2 for Support, F3 for Heavy, F4 for Demo)";
+		tierOneWeapon = "Tier 1: Machinegun (F5 to buy)";
+		tierTwoWeapon = "Tier 2: Chaingun (F6 to buy)";
+		classAmmo = "Class ammo: Bullets (F7 to buy)";
+	}
+	else
+	if(ent->client->pers.playerClass == CLASS_DEMO)
+	{
+		playerClass = "Class: Demo (F2 for Support, F3 for Heavy, F4 for Demo)";
+		tierOneWeapon = "Tier 1: Grenade Launcher (F5 to buy)";
+		tierTwoWeapon = "Tier 2: Rocket Launcher (F6 to buy)";
+		classAmmo = "Class ammo: Grenades & Rockets (F7 to buy)";
+	}
+	else
+	{
+		playerClass = "Class: No Class (F2 for Support, F3 for Heavy, F4 for Demo)";
+		tierOneWeapon = "Tier 1: None";
+		tierTwoWeapon = "Tier 2: None";
+		classAmmo = "Class ammo: None";
+		isNoClass = 1;
+	}
+
+	if(ent->client->pers.tierOneUpgradeLevel == 0 && isNoClass == 1)
+	{
+		tierOneWeaponUpgradeLevel = "Tier 1 lvl: 0";
+	}
+	else
+	if(ent->client->pers.tierOneUpgradeLevel == 0)
+	{
+		tierOneWeaponUpgradeLevel = "Tier 1 lvl: 0 (F5 to upgrade)";
+	}
+	else
+	if(ent->client->pers.tierOneUpgradeLevel == 1)
+	{
+		tierOneWeaponUpgradeLevel = "Tier 1 lvl: 1 (F5 to upgrade)";
+	}
+	else
+	if(ent->client->pers.tierOneUpgradeLevel == 2)
+	{
+		tierOneWeaponUpgradeLevel = "Tier 1 lvl: 2 (F5 to upgrade)";
+	}
+	else
+	if(ent->client->pers.tierOneUpgradeLevel == 3)
+	{
+		tierOneWeaponUpgradeLevel = "Tier 1 lvl: 3 (F5 to upgrade)";
+	}
+	else
+	{
+		tierOneWeaponUpgradeLevel = "Tier 1 lvl: Error";
+	}
+
+	if(ent->client->pers.tierTwoUpgradeLevel == 0 && isNoClass == 1)
+	{
+		tierTwoWeaponUpgradeLevel = "Tier 2 lvl: 0";
+	}
+	else
+	if(ent->client->pers.tierTwoUpgradeLevel == 0)
+	{
+		tierTwoWeaponUpgradeLevel = "Tier 2 lvl: 0 (F6 to upgrade)";
+	}
+	else
+	if(ent->client->pers.tierTwoUpgradeLevel == 1)
+	{
+		tierTwoWeaponUpgradeLevel = "Tier 2 lvl: 1 (F6 to upgrade)";
+	}
+	else
+	if(ent->client->pers.tierTwoUpgradeLevel == 2)
+	{
+		tierTwoWeaponUpgradeLevel = "Tier 2 lvl: 2 (F6 to upgrade)";
+	}
+	else
+	if(ent->client->pers.tierTwoUpgradeLevel == 3)
+	{
+		tierTwoWeaponUpgradeLevel = "Tier 2 lvl: 3 (F6 to upgrade)";
+	}
+	else
+	{
+		tierTwoWeaponUpgradeLevel = "Tier 2 lvl: Error";
+	}
+
+	Com_sprintf (string, sizeof(string), 
+		"xv 0 yv 0 string2 \"%s\" " 
+		"xv 0 yv 10 string2 \"%s\" "
+		"xv 0 yv 20 string2 \"%s\" "
+		"xv 0 yv 30 string2 \"%s\" "
+		"xv 0 yv 40 string2 \"%s\" "
+		"xv 0 yv 50 string2 \"%s\" "
+		
+		, playerClass,tierOneWeapon, tierOneWeaponUpgradeLevel, tierTwoWeapon, tierTwoWeaponUpgradeLevel, classAmmo);		
 
 	gi.WriteByte (svc_layout);
 	gi.WriteString (string);

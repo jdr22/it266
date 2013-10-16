@@ -844,6 +844,12 @@ typedef struct
 	int			helpchanged;
 
 	qboolean	spectator;			// client is a spectator
+
+	// stuff i added for my mod
+	int playerClass; // variable to check for class type
+	int tierOneUpgradeLevel; // level of the class's tier 1 weapon
+	int tierTwoUpgradeLevel; // level of the class's tier 2 weapon
+
 } client_persistant_t;
 
 // client data that stays across deathmatch respawns
@@ -1092,4 +1098,8 @@ struct edict_s
 	moveinfo_t		moveinfo;
 	monsterinfo_t	monsterinfo;
 };
+
+#define CLASS_SUPPORT 1
+#define CLASS_HEAVY 2
+#define CLASS_DEMO 3
 
