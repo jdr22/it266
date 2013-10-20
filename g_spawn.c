@@ -264,15 +264,15 @@ void ED_CallSpawn (edict_t *ent)
 	float temp; // i added this
 
 	/*// stuff i added
-		if(!strcmp(ent->classname, "ammo_shells"))
-		{
-			temp = deathmatch->value;
-			deathmatch->value = 0;
-			SP_monster_soldier_light(ent);
-			deathmatch->value = temp;
-			return;
-		}
-		*/
+	if(!strcmp(ent->classname, "ammo_shells"))
+	{
+		//temp = deathmatch->value;
+		//deathmatch->value = 0;
+		SP_monster_soldier_light(ent);
+		//deathmatch->value = temp;
+		return;
+	}*/
+		
 	/* DONT DO THIS. SERIOUSLY DONT
 	if(1)
 	{
@@ -283,7 +283,6 @@ void ED_CallSpawn (edict_t *ent)
 			return;
 	}*/
 		
-
 	if (!ent->classname)
 	{
 		gi.dprintf ("ED_CallSpawn: NULL classname\n");
@@ -620,6 +619,7 @@ void SpawnEntities (char *mapname, char *entities, char *spawnpoint)
 	G_FindTeams ();
 
 	PlayerTrail_Init ();
+
 }
 
 

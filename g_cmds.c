@@ -1136,24 +1136,76 @@ void Cmd_BuyRocketLauncher(edict_t *ent)
 
 void Cmd_BuyTierOne(edict_t *ent)
 {
-	if(ent->client->pers.playerClass == CLASS_SUPPORT)
+	gitem_t	*weapon;
+	int shotgunIndex;
+	int machinegunIndex;
+	int grenadeLauncherIndex;
+
+	weapon = FindItem("Shotgun");
+	shotgunIndex = ITEM_INDEX(weapon);
+	weapon = FindItem("Machinegun");
+	machinegunIndex = ITEM_INDEX(weapon);
+	weapon = FindItem("Grenade Launcher"); 
+	grenadeLauncherIndex = ITEM_INDEX(weapon);
+	
+
+	if(ent->client->pers.tierOneUpgradeLevel == 0)
 	{
-		Cmd_BuyShotgun(ent);
+		if(ent->client->pers.playerClass == CLASS_SUPPORT)
+		{
+			if( ent->client->pers.inventory[shotgunIndex] > 0 )
+			{
+				// perform the lvl 1 upgrade
+			}
+			else
+				Cmd_BuyShotgun(ent);
+		}
+		else
+		if( ent->client->pers.playerClass == CLASS_HEAVY)
+		{
+			if(ent->client->pers.inventory[machinegunIndex] > 0 )
+			{
+				// perform the lvl 1 upgrade
+			}
+			else
+				Cmd_BuyMachinegun(ent);
+		}
+		else
+		if(ent->client->pers.playerClass == CLASS_DEMO)
+		{
+			if(ent->client->pers.inventory[grenadeLauncherIndex] > 0 )
+			{
+				// perform the lvl 1 upgrade
+			}
+			else
+				Cmd_BuyGrenadeLauncher(ent);
+		}
+		else
+		{
+			gi.cprintf (ent, PRINT_CHAT, "You need to set your class first dummy!\n");
+		}
 	}
 	else
-	if( ent->client->pers.playerClass == CLASS_HEAVY)
+	if(ent->client->pers.tierOneUpgradeLevel == 1)
 	{
-		Cmd_BuyMachinegun(ent);
+		// upgrade to 2
 	}
 	else
-	if(ent->client->pers.playerClass == CLASS_DEMO)
+	if(ent->client->pers.tierOneUpgradeLevel == 2)
 	{
-		Cmd_BuyGrenadeLauncher(ent);
+		// upgrade to 3
 	}
 	else
+	if(ent->client->pers.tierOneUpgradeLevel >= 3)
 	{
-		gi.cprintf (ent, PRINT_CHAT, "You need to set your class first dummy!\n");
+		gi.cprintf (ent, PRINT_CHAT, "Your tier one upgrade is maxed out!\n");
 	}
+	else 
+	{
+		gi.cprintf (ent, PRINT_CHAT, "That's weird. Your tier one upgrade level is undefined.\n");
+	}
+
+
 }
 
 void Cmd_BuyTierTwo(edict_t *ent)

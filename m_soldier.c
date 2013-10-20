@@ -1218,11 +1218,11 @@ void SP_monster_soldier_x (edict_t *self)
 */
 void SP_monster_soldier_light (edict_t *self)
 {
-	if (deathmatch->value)
+	/*if (deathmatch->value)
 	{
 		G_FreeEdict (self);
 		return;
-	}
+	}*/
 
 	SP_monster_soldier_x (self);
 
@@ -1241,11 +1241,11 @@ void SP_monster_soldier_light (edict_t *self)
 */
 void SP_monster_soldier (edict_t *self)
 {
-	if (deathmatch->value)
+	/*(if (deathmatch->value)
 	{
 		G_FreeEdict (self);
 		return;
-	}
+	}*/
 
 	SP_monster_soldier_x (self);
 
@@ -1262,11 +1262,11 @@ void SP_monster_soldier (edict_t *self)
 */
 void SP_monster_soldier_ss (edict_t *self)
 {
-	if (deathmatch->value)
+	/*if (deathmatch->value)
 	{
 		G_FreeEdict (self);
 		return;
-	}
+	}*/
 
 	SP_monster_soldier_x (self);
 
