@@ -846,6 +846,7 @@ typedef struct
 	qboolean	spectator;			// client is a spectator
 
 	// stuff i added for my mod
+	int cash; // amount of money you have in the game
 	int playerClass; // variable to check for class type
 	int tierOneUpgradeLevel; // level of the class's tier 1 weapon
 	int tierTwoUpgradeLevel; // level of the class's tier 2 weapon

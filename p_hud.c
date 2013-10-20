@@ -241,6 +241,7 @@ void DeathmatchScoreboardMessage (edict_t *ent, edict_t *killer)
 	char* tierTwoWeapon;
 	char* tierTwoWeaponUpgradeLevel;
 	char* classAmmo;
+	char* cash;
 	int isNoClass;
 	
 	isNoClass = 0;
@@ -335,6 +336,8 @@ void DeathmatchScoreboardMessage (edict_t *ent, edict_t *killer)
 		tierTwoWeaponUpgradeLevel = "Tier 2 lvl: Error";
 	}
 
+	cash = "Cash: $";
+
 	Com_sprintf (string, sizeof(string), 
 		"xv 0 yv 0 string2 \"%s\" " 
 		"xv 0 yv 10 string2 \"%s\" "
@@ -342,8 +345,9 @@ void DeathmatchScoreboardMessage (edict_t *ent, edict_t *killer)
 		"xv 0 yv 30 string2 \"%s\" "
 		"xv 0 yv 40 string2 \"%s\" "
 		"xv 0 yv 50 string2 \"%s\" "
+		"xv 0 yv 60 string2 \"%s%i\" "
 		
-		, playerClass,tierOneWeapon, tierOneWeaponUpgradeLevel, tierTwoWeapon, tierTwoWeaponUpgradeLevel, classAmmo);		
+		, playerClass,tierOneWeapon, tierOneWeaponUpgradeLevel, tierTwoWeapon, tierTwoWeaponUpgradeLevel, classAmmo, cash, ent->client->pers.cash);		
 
 	gi.WriteByte (svc_layout);
 	gi.WriteString (string);

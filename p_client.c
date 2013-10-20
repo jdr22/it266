@@ -607,6 +607,9 @@ void InitClientPersistant (gclient_t *client)
 	client->pers.max_cells		= 200;
 	client->pers.max_slugs		= 50;
 
+	// stuff I added for my mod
+	client->pers.cash = 100;
+
 	client->pers.connected = true;
 }
 
