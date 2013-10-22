@@ -368,7 +368,11 @@ void infantry_die (edict_t *self, edict_t *inflictor, edict_t *attacker, int dam
 {
 	int		n;
 
-	attacker->client->pers.cash += 15;
+	// if i dont do this check i think it can cause the game to crash
+	if(attacker->client)
+	{
+		attacker->client->pers.cash += 15;
+	}
 
 // check for gib
 	if (self->health <= self->gib_health)

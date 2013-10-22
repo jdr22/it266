@@ -21,6 +21,9 @@ static int	sound_death;
 static int	sound_death_ss;
 static int	sound_cock;
 
+void SP_monster_soldier_x (edict_t *self);
+void SP_monster_soldier_light (edict_t *self);
+
 
 void soldier_idle (edict_t *self)
 {
@@ -1127,8 +1130,10 @@ void soldier_die (edict_t *self, edict_t *inflictor, edict_t *attacker, int dama
 	int		n;
 
 	//code i added for my mod
-	attacker->client->pers.cash += 10;
-	
+	if(attacker->client)
+	{
+		attacker->client->pers.cash += 10;
+	}
 
 // check for gib
 	if (self->health <= self->gib_health)
@@ -1142,8 +1147,20 @@ void soldier_die (edict_t *self, edict_t *inflictor, edict_t *attacker, int dama
 		return;
 	}
 
+	/*
 	if (self->deadflag == DEAD_DEAD)
 		return;
+	*/
+	
+	// hopefully i can figure out some way to respawn
+	if (self->deadflag == DEAD_DEAD)
+	{
+		self->deadflag = DEAD_NO;
+		self->think = monster_triggered_spawn;
+		SP_monster_soldier_light(self);
+		return;
+	}
+	
 
 // regular death
 	self->deadflag = DEAD_DEAD;

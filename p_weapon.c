@@ -1014,7 +1014,18 @@ void Machinegun_Fire (edict_t *ent)
 	AngleVectors (angles, forward, right, NULL);
 	VectorSet(offset, 0, 8, ent->viewheight-8);
 	P_ProjectSource (ent->client, ent->s.origin, offset, forward, right, start);
-	fire_bullet (ent, start, forward, damage, kick, DEFAULT_BULLET_HSPREAD, DEFAULT_BULLET_VSPREAD, MOD_MACHINEGUN);
+
+	if(ent->client->pers.playerClass == CLASS_HEAVY)
+	{
+		if(ent->client->pers.tierOneUpgradeLevel == 1)
+		{
+			fire_bullet (ent, start, forward, damage, kick, 0, 0, MOD_MACHINEGUN);
+		}
+		else
+			fire_bullet (ent, start, forward, damage, kick, DEFAULT_BULLET_HSPREAD, DEFAULT_BULLET_VSPREAD, MOD_MACHINEGUN);
+	}
+	else
+		fire_bullet (ent, start, forward, damage, kick, DEFAULT_BULLET_HSPREAD, DEFAULT_BULLET_VSPREAD, MOD_MACHINEGUN);
 
 	gi.WriteByte (svc_muzzleflash);
 	gi.WriteShort (ent-g_edicts);
@@ -1212,10 +1223,26 @@ void weapon_shotgun_fire (edict_t *ent)
 		kick *= 4;
 	}
 
+	// count is the number of pellets
+	/*
 	if (deathmatch->value)
 		fire_shotgun (ent, start, forward, damage, kick, 500, 500, DEFAULT_DEATHMATCH_SHOTGUN_COUNT, MOD_SHOTGUN);
 	else
 		fire_shotgun (ent, start, forward, damage, kick, 500, 500, DEFAULT_SHOTGUN_COUNT, MOD_SHOTGUN);
+	*/
+
+	if(ent->client->pers.playerClass == CLASS_SUPPORT)
+	{
+		if(ent->client->pers.tierOneUpgradeLevel == 1)
+		{
+			fire_shotgun (ent, start, forward, damage, kick, 50, 50, DEFAULT_DEATHMATCH_SHOTGUN_COUNT, MOD_SHOTGUN);
+		}
+		else
+			fire_shotgun (ent, start, forward, damage, kick, 500, 500, DEFAULT_DEATHMATCH_SHOTGUN_COUNT, MOD_SHOTGUN);
+	}
+	else
+		fire_shotgun (ent, start, forward, damage, kick, 500, 500, DEFAULT_DEATHMATCH_SHOTGUN_COUNT, MOD_SHOTGUN);
+
 
 	// send muzzle flash
 	gi.WriteByte (svc_muzzleflash);
