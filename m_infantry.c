@@ -368,6 +368,8 @@ void infantry_die (edict_t *self, edict_t *inflictor, edict_t *attacker, int dam
 {
 	int		n;
 
+	attacker->client->pers.cash += 15;
+
 // check for gib
 	if (self->health <= self->gib_health)
 	{

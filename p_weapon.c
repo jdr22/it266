@@ -706,7 +706,19 @@ void weapon_grenadelauncher_fire (edict_t *ent)
 	VectorScale (forward, -2, ent->client->kick_origin);
 	ent->client->kick_angles[0] = -1;
 
-	fire_grenade (ent, start, forward, damage, 600, 2.5, radius);
+	// stuff i added
+	if(ent->client->pers.playerClass == CLASS_DEMO)
+	{
+		if(ent->client->pers.tierOneUpgradeLevel == 1)
+		{
+			fire_grenade (ent, start, forward, damage, 600, 2.5, radius);
+			fire_grenade (ent, start, forward, damage, 500, 2.5, radius);
+		}
+		else
+			fire_grenade (ent, start, forward, damage, 600, 2.5, radius);
+	}
+	else
+		fire_grenade (ent, start, forward, damage, 600, 2.5, radius);
 
 	gi.WriteByte (svc_muzzleflash);
 	gi.WriteShort (ent-g_edicts);

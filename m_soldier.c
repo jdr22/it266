@@ -1126,6 +1126,10 @@ void soldier_die (edict_t *self, edict_t *inflictor, edict_t *attacker, int dama
 {
 	int		n;
 
+	//code i added for my mod
+	attacker->client->pers.cash += 10;
+	
+
 // check for gib
 	if (self->health <= self->gib_health)
 	{

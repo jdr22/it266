@@ -249,25 +249,25 @@ void DeathmatchScoreboardMessage (edict_t *ent, edict_t *killer)
 	if(ent->client->pers.playerClass == CLASS_SUPPORT)
 	{
 		playerClass = "Class: Support (F2 for Support, F3 for Heavy, F4 for Demo)";
-		tierOneWeapon = "Tier 1: Shotgun (F5 to buy)";
+		tierOneWeapon = "Tier 1: Shotgun (F5 to buy $100)";
 		tierTwoWeapon = "Tier 2: Super Shotgun (F6 to buy)";
-		classAmmo = "Class ammo: Shells (F7 to buy)";
+		classAmmo = "Class ammo: Shells (F7 to buy $50)";
 	}
 	else
 	if( ent->client->pers.playerClass == CLASS_HEAVY)
 	{
 		playerClass = "Class: Heavy (F2 for Support, F3 for Heavy, F4 for Demo)";
-		tierOneWeapon = "Tier 1: Machinegun (F5 to buy)";
+		tierOneWeapon = "Tier 1: Machinegun (F5 to buy $100)";
 		tierTwoWeapon = "Tier 2: Chaingun (F6 to buy)";
-		classAmmo = "Class ammo: Bullets (F7 to buy)";
+		classAmmo = "Class ammo: Bullets (F7 to buy $25)";
 	}
 	else
 	if(ent->client->pers.playerClass == CLASS_DEMO)
 	{
 		playerClass = "Class: Demo (F2 for Support, F3 for Heavy, F4 for Demo)";
-		tierOneWeapon = "Tier 1: Grenade Launcher (F5 to buy)";
+		tierOneWeapon = "Tier 1: Grenade Launcher (F5 to buy $100)";
 		tierTwoWeapon = "Tier 2: Rocket Launcher (F6 to buy)";
-		classAmmo = "Class ammo: Grenades & Rockets (F7 to buy)";
+		classAmmo = "Class ammo: Grenades & Rockets (F7 to buy $50)";
 	}
 	else
 	{
@@ -285,22 +285,22 @@ void DeathmatchScoreboardMessage (edict_t *ent, edict_t *killer)
 	else
 	if(ent->client->pers.tierOneUpgradeLevel == 0)
 	{
-		tierOneWeaponUpgradeLevel = "Tier 1 lvl: 0 (F5 to upgrade)";
+		tierOneWeaponUpgradeLevel = "Tier 1 lvl: 0 (F5 to upgrade $200)";
 	}
 	else
 	if(ent->client->pers.tierOneUpgradeLevel == 1)
 	{
-		tierOneWeaponUpgradeLevel = "Tier 1 lvl: 1 (F5 to upgrade)";
+		tierOneWeaponUpgradeLevel = "Tier 1 lvl: 1 (F5 to upgrade $300)";
 	}
 	else
 	if(ent->client->pers.tierOneUpgradeLevel == 2)
 	{
-		tierOneWeaponUpgradeLevel = "Tier 1 lvl: 2 (F5 to upgrade)";
+		tierOneWeaponUpgradeLevel = "Tier 1 lvl: 2 (F5 to upgrade $400)";
 	}
 	else
 	if(ent->client->pers.tierOneUpgradeLevel == 3)
 	{
-		tierOneWeaponUpgradeLevel = "Tier 1 lvl: 3 (F5 to upgrade)";
+		tierOneWeaponUpgradeLevel = "Tier 1 lvl: 3";
 	}
 	else
 	{
@@ -329,7 +329,7 @@ void DeathmatchScoreboardMessage (edict_t *ent, edict_t *killer)
 	else
 	if(ent->client->pers.tierTwoUpgradeLevel == 3)
 	{
-		tierTwoWeaponUpgradeLevel = "Tier 2 lvl: 3 (F6 to upgrade)";
+		tierTwoWeaponUpgradeLevel = "Tier 2 lvl: 3";
 	}
 	else
 	{

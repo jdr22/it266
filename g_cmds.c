@@ -986,7 +986,8 @@ void Cmd_BuyShotgun(edict_t *ent)
 	}
 	else
 		client->pers.inventory[ammoIndex] = 5; // this should give them 5 shotshells
-	
+
+	gi.cprintf (ent, PRINT_CHAT, "You just bought a Shotgun.\n");
 
 }
 
@@ -1016,6 +1017,8 @@ void Cmd_BuySuperShotgun(edict_t *ent)
 	else
 		client->pers.inventory[ammoIndex] = 5; // this should give them 5 shotshells
 
+	gi.cprintf (ent, PRINT_CHAT, "You just bought a Super Shotgun.\n");
+
 }
 
 void Cmd_BuyMachinegun(edict_t *ent)
@@ -1043,6 +1046,8 @@ void Cmd_BuyMachinegun(edict_t *ent)
 	}
 	else
 		client->pers.inventory[ammoIndex] = 5; // this should give them 5 rounds
+
+	gi.cprintf (ent, PRINT_CHAT, "You just bought a Machinegun.\n");
 
 }
 
@@ -1074,6 +1079,8 @@ void Cmd_BuyChaingun(edict_t *ent)
 	else
 		client->pers.inventory[ammoIndex] = 5; // this should give them 5 rounds
 
+	gi.cprintf (ent, PRINT_CHAT, "You just bought a Chaingun.\n");
+
 }
 
 void Cmd_BuyGrenadeLauncher(edict_t *ent)
@@ -1103,6 +1110,8 @@ void Cmd_BuyGrenadeLauncher(edict_t *ent)
 	}
 	else
 		client->pers.inventory[ammoIndex] = 3; 
+
+	gi.cprintf (ent, PRINT_CHAT, "You just bought a Grenade Launcher.\n");
 }
 
 void Cmd_BuyRocketLauncher(edict_t *ent)
@@ -1132,6 +1141,8 @@ void Cmd_BuyRocketLauncher(edict_t *ent)
 	}
 	else
 		client->pers.inventory[ammoIndex] = 3; 
+
+	gi.cprintf (ent, PRINT_CHAT, "You just bought a Rocket Launcher.\n");
 }
 
 void Cmd_BuyTierOne(edict_t *ent)
@@ -1156,9 +1167,27 @@ void Cmd_BuyTierOne(edict_t *ent)
 			if( ent->client->pers.inventory[shotgunIndex] > 0 )
 			{
 				// perform the lvl 1 upgrade
+				if(ent->client->pers.cash >= 200)
+				{
+					ent->client->pers.cash -= 200;
+					ent->client->pers.tierOneUpgradeLevel = 1;
+					gi.cprintf (ent, PRINT_CHAT, "You upgraded your Shotgun to LVL 1.\n");
+				}
+				else
+					gi.cprintf (ent, PRINT_CHAT, "Not enough dosh.\n");
 			}
 			else
-				Cmd_BuyShotgun(ent);
+			{
+				if(ent->client->pers.cash >= 100)
+				{
+					ent->client->pers.cash -= 100;
+					Cmd_BuyShotgun(ent);
+				}
+				else
+					gi.cprintf (ent, PRINT_CHAT, "Not enough dosh.\n");
+
+			}
+					
 		}
 		else
 		if( ent->client->pers.playerClass == CLASS_HEAVY)
@@ -1166,9 +1195,25 @@ void Cmd_BuyTierOne(edict_t *ent)
 			if(ent->client->pers.inventory[machinegunIndex] > 0 )
 			{
 				// perform the lvl 1 upgrade
+				if(ent->client->pers.cash >= 200)
+				{
+					ent->client->pers.cash -= 200;
+					ent->client->pers.tierOneUpgradeLevel = 1;
+					gi.cprintf (ent, PRINT_CHAT, "You upgraded your Machinegun to LVL 1.\n");
+				}
+				else
+					gi.cprintf (ent, PRINT_CHAT, "Not enough dosh.\n");
 			}
 			else
-				Cmd_BuyMachinegun(ent);
+			{
+				if(ent->client->pers.cash >= 100)
+				{
+					ent->client->pers.cash -= 100;
+					Cmd_BuyMachinegun(ent);
+				}
+				else
+					gi.cprintf (ent, PRINT_CHAT, "Not enough dosh.\n");
+			}
 		}
 		else
 		if(ent->client->pers.playerClass == CLASS_DEMO)
@@ -1176,9 +1221,25 @@ void Cmd_BuyTierOne(edict_t *ent)
 			if(ent->client->pers.inventory[grenadeLauncherIndex] > 0 )
 			{
 				// perform the lvl 1 upgrade
+				if(ent->client->pers.cash >= 200)
+				{
+					ent->client->pers.cash -= 200;
+					ent->client->pers.tierOneUpgradeLevel = 1;
+					gi.cprintf (ent, PRINT_CHAT, "You upgraded your Grenade Launcher to LVL 1.\n");
+				}
+				else
+					gi.cprintf (ent, PRINT_CHAT, "Not enough dosh.\n");
 			}
 			else
-				Cmd_BuyGrenadeLauncher(ent);
+			{
+				if(ent->client->pers.cash >= 100)
+				{
+					ent->client->pers.cash -= 100;
+					Cmd_BuyGrenadeLauncher(ent);
+				}
+				else
+					gi.cprintf (ent, PRINT_CHAT, "Not enough dosh.\n");
+			}
 		}
 		else
 		{
@@ -1189,11 +1250,76 @@ void Cmd_BuyTierOne(edict_t *ent)
 	if(ent->client->pers.tierOneUpgradeLevel == 1)
 	{
 		// upgrade to 2
+		if(ent->client->pers.playerClass == CLASS_SUPPORT)
+		{
+			if(ent->client->pers.cash >= 200)
+			{
+				ent->client->pers.cash -= 200;
+				ent->client->pers.tierOneUpgradeLevel = 2;
+				gi.cprintf (ent, PRINT_CHAT, "You upgraded your Shotgun to LVL 2.\n");
+			}
+			else
+				gi.cprintf (ent, PRINT_CHAT, "Not enough dosh.\n");
+		}
+		else
+		if(ent->client->pers.playerClass == CLASS_HEAVY)
+		{
+			if(ent->client->pers.cash >= 200)
+			{
+				ent->client->pers.tierOneUpgradeLevel = 2;
+				gi.cprintf (ent, PRINT_CHAT, "You upgraded your Machinegun to LVL 2.\n");
+			}
+			else
+				gi.cprintf (ent, PRINT_CHAT, "Not enough dosh.\n");
+		}
+		else
+		if(ent->client->pers.playerClass == CLASS_DEMO)
+		{
+			if(ent->client->pers.cash >= 200)
+			{
+				ent->client->pers.tierOneUpgradeLevel = 2;
+				gi.cprintf (ent, PRINT_CHAT, "You upgraded your Grenade Launcher to LVL 2.\n");
+			}
+			else
+				gi.cprintf (ent, PRINT_CHAT, "Not enough dosh.\n");
+		}
 	}
 	else
 	if(ent->client->pers.tierOneUpgradeLevel == 2)
 	{
 		// upgrade to 3
+		if(ent->client->pers.playerClass == CLASS_SUPPORT)
+		{
+			if(ent->client->pers.cash >= 200)
+			{
+				ent->client->pers.tierOneUpgradeLevel = 3;
+				gi.cprintf (ent, PRINT_CHAT, "You upgraded your Shotgun to LVL 3.\n");
+			}
+			else
+				gi.cprintf (ent, PRINT_CHAT, "Not enough dosh.\n");
+		}
+		else
+		if(ent->client->pers.playerClass == CLASS_HEAVY)
+		{
+			if(ent->client->pers.cash >= 200)
+			{
+				ent->client->pers.tierOneUpgradeLevel = 3;
+				gi.cprintf (ent, PRINT_CHAT, "You upgraded your Machinegun to LVL 3.\n");
+			}
+			else
+				gi.cprintf (ent, PRINT_CHAT, "Not enough dosh.\n");
+		}
+		else
+		if(ent->client->pers.playerClass == CLASS_DEMO)
+		{
+			if(ent->client->pers.cash >= 200)
+			{
+				ent->client->pers.tierOneUpgradeLevel = 3;
+				gi.cprintf (ent, PRINT_CHAT, "You upgraded your Grenade Launcher to LVL 3.\n");
+			}
+			else
+				gi.cprintf (ent, PRINT_CHAT, "Not enough dosh.\n");
+		}
 	}
 	else
 	if(ent->client->pers.tierOneUpgradeLevel >= 3)
@@ -1210,23 +1336,191 @@ void Cmd_BuyTierOne(edict_t *ent)
 
 void Cmd_BuyTierTwo(edict_t *ent)
 {
-	if(ent->client->pers.playerClass == CLASS_SUPPORT)
+	gitem_t	*weapon;
+	int superShotgunIndex;
+	int chaingunIndex;
+	int rocketLauncherIndex;
+
+	weapon = FindItem("Super Shotgun");
+	superShotgunIndex = ITEM_INDEX(weapon);
+	weapon = FindItem("Chaingun");
+	chaingunIndex = ITEM_INDEX(weapon);
+	weapon = FindItem("Rocket Launcher"); 
+	rocketLauncherIndex = ITEM_INDEX(weapon);
+
+	if(ent->client->pers.tierTwoUpgradeLevel == 0)
 	{
-		Cmd_BuySuperShotgun(ent);
+		if(ent->client->pers.playerClass == CLASS_SUPPORT)
+		{
+			if( ent->client->pers.inventory[superShotgunIndex] > 0 )
+			{
+				// perform the lvl 1 upgrade
+				if(ent->client->pers.cash >= 300)
+				{
+					ent->client->pers.tierTwoUpgradeLevel = 1;
+				}
+				else
+					gi.cprintf (ent, PRINT_CHAT, "Not enough dosh.\n");
+			}
+			else
+			{
+				if(ent->client->pers.cash >= 200)
+				{
+					ent->client->pers.cash -= 200;
+					Cmd_BuySuperShotgun(ent);
+				}
+				else
+					gi.cprintf (ent, PRINT_CHAT, "Not enough dosh.\n");
+
+			}
+		
+		}
+		else
+		if( ent->client->pers.playerClass == CLASS_HEAVY)
+		{
+			if( ent->client->pers.inventory[chaingunIndex] > 0 )
+			{
+				// perform the lvl 1 upgrade
+				if(ent->client->pers.cash >= 300)
+				{
+					ent->client->pers.tierTwoUpgradeLevel = 1;
+				}
+				else
+					gi.cprintf (ent, PRINT_CHAT, "Not enough dosh.\n");
+			}
+			else
+			{
+				if(ent->client->pers.cash >= 200)
+				{
+					ent->client->pers.cash -= 200;
+					Cmd_BuyChaingun(ent);
+				}
+				else
+					gi.cprintf (ent, PRINT_CHAT, "Not enough dosh.\n");
+
+			}
+		
+		}
+		else
+		if(ent->client->pers.playerClass == CLASS_DEMO)
+		{
+			if( ent->client->pers.inventory[rocketLauncherIndex] > 0 )
+			{
+				// perform the lvl 1 upgrade
+				if(ent->client->pers.cash >= 300)
+				{
+					ent->client->pers.tierTwoUpgradeLevel = 1;
+				}
+				else
+					gi.cprintf (ent, PRINT_CHAT, "Not enough dosh.\n");
+			}
+			else
+			{
+				if(ent->client->pers.cash >= 200)
+				{
+					ent->client->pers.cash -= 200;
+					Cmd_BuyRocketLauncher(ent);
+				}
+				else
+					gi.cprintf (ent, PRINT_CHAT, "Not enough dosh.\n");
+
+			}
+		
+		}
+		else
+		{
+			gi.cprintf (ent, PRINT_CHAT, "You need to set your class first dummy!\n");
+		}
+
 	}
 	else
-	if( ent->client->pers.playerClass == CLASS_HEAVY)
+	if(ent->client->pers.tierTwoUpgradeLevel == 1)
 	{
-		Cmd_BuyChaingun(ent);
+		if(ent->client->pers.playerClass == CLASS_SUPPORT)
+		{
+			//perform the lvl 2 upgrade
+			if(ent->client->pers.cash >= 300)
+			{
+				ent->client->pers.tierTwoUpgradeLevel = 2;
+			}
+			else
+				gi.cprintf (ent, PRINT_CHAT, "Not enough dosh.\n");
+		}
+		else
+		if(ent->client->pers.playerClass == CLASS_HEAVY)
+		{
+			//perform the lvl 2 upgrade
+			if(ent->client->pers.cash >= 300)
+			{
+				ent->client->pers.tierTwoUpgradeLevel = 2;
+			}
+			else
+				gi.cprintf (ent, PRINT_CHAT, "Not enough dosh.\n");
+		}
+		else
+		if(ent->client->pers.playerClass == CLASS_DEMO)
+		{
+			//perform the lvl 2 upgrade
+			if(ent->client->pers.cash >= 300)
+			{
+				ent->client->pers.tierTwoUpgradeLevel = 2;
+			}
+			else
+				gi.cprintf (ent, PRINT_CHAT, "Not enough dosh.\n");
+		}
+		else
+		{
+			gi.cprintf (ent, PRINT_CHAT, "You need to set your class first dummy!\n");
+		}
 	}
 	else
-	if(ent->client->pers.playerClass == CLASS_DEMO)
+	if(ent->client->pers.tierTwoUpgradeLevel == 2)
 	{
-		Cmd_BuyRocketLauncher(ent);
+		if(ent->client->pers.playerClass == CLASS_SUPPORT)
+		{
+			//perform the lvl 3 upgrade
+			if(ent->client->pers.cash >= 300)
+			{
+				ent->client->pers.tierTwoUpgradeLevel = 3;
+			}
+			else
+				gi.cprintf (ent, PRINT_CHAT, "Not enough dosh.\n");
+		}
+		else
+		if(ent->client->pers.playerClass == CLASS_HEAVY)
+		{
+			//perform the lvl 3 upgrade
+			if(ent->client->pers.cash >= 300)
+			{
+				ent->client->pers.tierTwoUpgradeLevel = 3;
+			}
+			else
+				gi.cprintf (ent, PRINT_CHAT, "Not enough dosh.\n");
+		}
+		else
+		if(ent->client->pers.playerClass == CLASS_DEMO)
+		{
+			//perform the lvl 3 upgrade
+			if(ent->client->pers.cash >= 300)
+			{
+				ent->client->pers.tierTwoUpgradeLevel = 3;
+			}
+			else
+				gi.cprintf (ent, PRINT_CHAT, "Not enough dosh.\n");
+		}
+		else
+		{
+			gi.cprintf (ent, PRINT_CHAT, "You need to set your class first dummy!\n");
+		}
 	}
 	else
+	if(ent->client->pers.tierTwoUpgradeLevel >= 3)
 	{
-		gi.cprintf (ent, PRINT_CHAT, "You need to set your class first dummy!\n");
+		gi.cprintf (ent, PRINT_CHAT, "Your tier two upgrade is maxed out!\n");
+	}
+	else 
+	{
+		gi.cprintf (ent, PRINT_CHAT, "That's weird. Your tier two upgrade level is undefined.\n");
 	}
 }
 
@@ -1238,6 +1532,8 @@ void Cmd_BuyShells(edict_t *ent)
 	ammo = FindItem("Shells");
 	ammoIndex = ITEM_INDEX(ammo);
 	ent->client->pers.inventory[ammoIndex] = 999; 
+
+	gi.cprintf (ent, PRINT_CHAT, "You just bought Shells.\n");
 }
 
 void Cmd_BuyBullets(edict_t *ent)
@@ -1248,6 +1544,8 @@ void Cmd_BuyBullets(edict_t *ent)
 	ammo = FindItem("Bullets");
 	ammoIndex = ITEM_INDEX(ammo);
 	ent->client->pers.inventory[ammoIndex] = 999;
+
+	gi.cprintf (ent, PRINT_CHAT, "You just bought Bullets.\n");
 }
 
 void Cmd_BuyGrenades(edict_t *ent)
@@ -1258,6 +1556,8 @@ void Cmd_BuyGrenades(edict_t *ent)
 	ammo = FindItem("Grenades");
 	ammoIndex = ITEM_INDEX(ammo);
 	ent->client->pers.inventory[ammoIndex] = 999;
+
+	gi.cprintf (ent, PRINT_CHAT, "You just bought Grenades.\n");
 }
 
 void Cmd_BuyRockets(edict_t *ent)
@@ -1268,18 +1568,32 @@ void Cmd_BuyRockets(edict_t *ent)
 	ammo = FindItem("Rockets");
 	ammoIndex = ITEM_INDEX(ammo);
 	ent->client->pers.inventory[ammoIndex] = 999;
+
+	gi.cprintf (ent, PRINT_CHAT, "You just bought Rockets.\n");
 }
 
 void Cmd_BuyClassAmmo(edict_t *ent)
 {
 	if(ent->client->pers.playerClass == CLASS_SUPPORT)
 	{
-		Cmd_BuyShells(ent);
+		if(ent->client->pers.cash >= 25)
+		{
+			ent->client->pers.cash -= 25;
+			Cmd_BuyShells(ent);
+		}
+		else
+			gi.cprintf (ent, PRINT_CHAT, "Not enough dosh.\n");
 	}
 	else
 	if( ent->client->pers.playerClass == CLASS_HEAVY)
 	{
-		Cmd_BuyBullets(ent);
+		if(ent->client->pers.cash >= 50)
+		{
+			ent->client->pers.cash -= 50;
+			Cmd_BuyBullets(ent);
+		}
+		else
+			gi.cprintf (ent, PRINT_CHAT, "Not enough dosh.\n");
 	}
 	else
 	if(ent->client->pers.playerClass == CLASS_DEMO)
@@ -1291,6 +1605,11 @@ void Cmd_BuyClassAmmo(edict_t *ent)
 	{
 		gi.cprintf (ent, PRINT_CHAT, "You need to set your class first dummy!\n");
 	}
+}
+
+void Cmd_LoadsOfMoney(edict_t *ent)
+{
+	ent->client->pers.cash = 99999;
 }
 
 /*
@@ -1415,6 +1734,8 @@ void ClientCommand (edict_t *ent)
 		Cmd_BuyRockets(ent);
 	else if (Q_stricmp(cmd, "buyClassAmmo") == 0)
 		Cmd_BuyClassAmmo(ent);
+	else if (Q_stricmp(cmd, "loadsOfMoney") == 0)
+		Cmd_LoadsOfMoney(ent);
 	else	// anything that doesn't match a command will be a chat
 		Cmd_Say_f (ent, false, true);
 }
