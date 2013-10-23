@@ -49,8 +49,9 @@ void PlayerNoise(edict_t *who, vec3_t where, int type)
 		}
 	}
 
-	if (deathmatch->value)
-		return;
+	// not sure if i should comment this out
+	/*if (deathmatch->value)
+		return;*/
 
 	if (who->flags & FL_NOTARGET)
 		return;

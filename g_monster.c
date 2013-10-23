@@ -1,6 +1,5 @@
 #include "g_local.h"
 
-
 //
 // monster weapons
 //
@@ -463,6 +462,7 @@ void monster_triggered_spawn (edict_t *self)
 
 void monster_triggered_spawn_use (edict_t *self, edict_t *other, edict_t *activator)
 {
+	gi.dprintf (" I am using monster triggered spawn use!\n");
 	// we have a one frame delay here so we don't telefrag the guy who activated us
 	self->think = monster_triggered_spawn;
 	self->nextthink = level.time + FRAMETIME;
@@ -640,14 +640,21 @@ void monster_start_go (edict_t *self)
 	}
 	else
 	{
+		if(self)
+		{
+			gi.dprintf ("I am walking!\n");
+			self->monsterinfo.walk(self);
+			
+		}
+		/*
 		self->monsterinfo.pausetime = 100000000;
 		self->monsterinfo.stand (self);
+		*/
 	}
 
 	self->think = monster_think;
 	self->nextthink = level.time + FRAMETIME;
 }
-
 
 void walkmonster_start_go (edict_t *self)
 {
@@ -667,7 +674,10 @@ void walkmonster_start_go (edict_t *self)
 	monster_start_go (self);
 
 	if (self->spawnflags & 2)
+	{
 		monster_triggered_start (self);
+	}
+
 }
 
 void walkmonster_start (edict_t *self)

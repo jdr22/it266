@@ -23,6 +23,7 @@ static int	sound_cock;
 
 void SP_monster_soldier_x (edict_t *self);
 void SP_monster_soldier_light (edict_t *self);
+void SP_monster_infantry (edict_t *self);
 
 
 void soldier_idle (edict_t *self)
@@ -1128,6 +1129,9 @@ mmove_t soldier_move_death6 = {FRAME_death601, FRAME_death610, soldier_frames_de
 void soldier_die (edict_t *self, edict_t *inflictor, edict_t *attacker, int damage, vec3_t point)
 {
 	int		n;
+	edict_t* enemy;
+
+	enemy = self->enemy;
 
 	//code i added for my mod
 	if(attacker->client)
@@ -1153,16 +1157,17 @@ void soldier_die (edict_t *self, edict_t *inflictor, edict_t *attacker, int dama
 	*/
 	
 	// hopefully i can figure out some way to respawn
+	
 	if (self->deadflag == DEAD_DEAD)
 	{
-		self->deadflag = DEAD_NO;
-		self->think = monster_triggered_spawn;
-		SP_monster_soldier_light(self);
+		//self->spawnflags |= 2; // i would use this if i dont want em to spawn until some trigger is met
+		SP_monster_infantry (self);
+		
 		return;
 	}
 	
 
-// regular death
+	// regular death
 	self->deadflag = DEAD_DEAD;
 	self->takedamage = DAMAGE_YES;
 	self->s.skinnum |= 1;

@@ -454,11 +454,12 @@ void point_combat_touch (edict_t *self, edict_t *other, cplane_t *plane, csurfac
 
 void SP_point_combat (edict_t *self)
 {
-	if (deathmatch->value)
+	// i may not need to turn that check off
+	/*if (deathmatch->value)
 	{
 		G_FreeEdict (self);
 		return;
-	}
+	}*/
 	self->solid = SOLID_TRIGGER;
 	self->touch = point_combat_touch;
 	VectorSet (self->mins, -8, -8, -16);
