@@ -250,7 +250,7 @@ void DeathmatchScoreboardMessage (edict_t *ent, edict_t *killer)
 	{
 		playerClass = "Class: Support (F2 for Support, F3 for Heavy, F4 for Demo)";
 		tierOneWeapon = "Tier 1: Shotgun (F5 to buy $100)";
-		tierTwoWeapon = "Tier 2: Super Shotgun (F6 to buy)";
+		tierTwoWeapon = "Tier 2: Super Shotgun (F6 to buy $200)";
 		classAmmo = "Class ammo: Shells (F7 to buy $50)";
 	}
 	else
@@ -258,7 +258,7 @@ void DeathmatchScoreboardMessage (edict_t *ent, edict_t *killer)
 	{
 		playerClass = "Class: Heavy (F2 for Support, F3 for Heavy, F4 for Demo)";
 		tierOneWeapon = "Tier 1: Machinegun (F5 to buy $100)";
-		tierTwoWeapon = "Tier 2: Chaingun (F6 to buy)";
+		tierTwoWeapon = "Tier 2: Chaingun (F6 to buy $200)";
 		classAmmo = "Class ammo: Bullets (F7 to buy $25)";
 	}
 	else
@@ -266,7 +266,7 @@ void DeathmatchScoreboardMessage (edict_t *ent, edict_t *killer)
 	{
 		playerClass = "Class: Demo (F2 for Support, F3 for Heavy, F4 for Demo)";
 		tierOneWeapon = "Tier 1: Grenade Launcher (F5 to buy $100)";
-		tierTwoWeapon = "Tier 2: Rocket Launcher (F6 to buy)";
+		tierTwoWeapon = "Tier 2: Rocket Launcher (F6 to buy $200)";
 		classAmmo = "Class ammo: Grenades & Rockets (F7 to buy $50)";
 	}
 	else
@@ -314,17 +314,17 @@ void DeathmatchScoreboardMessage (edict_t *ent, edict_t *killer)
 	else
 	if(ent->client->pers.tierTwoUpgradeLevel == 0)
 	{
-		tierTwoWeaponUpgradeLevel = "Tier 2 lvl: 0 (F6 to upgrade)";
+		tierTwoWeaponUpgradeLevel = "Tier 2 lvl: 0 (F6 to upgrade $300)";
 	}
 	else
 	if(ent->client->pers.tierTwoUpgradeLevel == 1)
 	{
-		tierTwoWeaponUpgradeLevel = "Tier 2 lvl: 1 (F6 to upgrade)";
+		tierTwoWeaponUpgradeLevel = "Tier 2 lvl: 1 (F6 to upgrade $400)";
 	}
 	else
 	if(ent->client->pers.tierTwoUpgradeLevel == 2)
 	{
-		tierTwoWeaponUpgradeLevel = "Tier 2 lvl: 2 (F6 to upgrade)";
+		tierTwoWeaponUpgradeLevel = "Tier 2 lvl: 2 (F6 to upgrade $500)";
 	}
 	else
 	if(ent->client->pers.tierTwoUpgradeLevel == 3)

@@ -757,8 +757,7 @@ void Weapon_RocketLauncher_Fire (edict_t *ent)
 	int		damage;
 	float	damage_radius;
 	int		radius_damage;
-	// stuff i added below
-	gclient_t *client;
+	
 
 	damage = 100 + (int)(random() * 20.0);
 	radius_damage = 120;
@@ -774,17 +773,33 @@ void Weapon_RocketLauncher_Fire (edict_t *ent)
 	VectorScale (forward, -2, ent->client->kick_origin);
 	ent->client->kick_angles[0] = -1;
 
-	VectorSet(offset, 8, 8, ent->viewheight-8);
-	P_ProjectSource (ent->client, ent->s.origin, offset, forward, right, start);
+	
 
-	client = ent->client;
-	if( client->pers.playerClass == CLASS_DEMO )
+	if( ent->client->pers.playerClass == CLASS_DEMO )
 	{
-		fire_rocket (ent, start, forward, damage * 8, 650, damage_radius, radius_damage * 8);
-		fire_rocket (ent, start, forward, damage * 8, 650, damage_radius, radius_damage * 8);
+		if(ent->client->pers.tierTwoUpgradeLevel == 1 )
+		{
+			VectorSet(offset, -8, -8, ent->viewheight-8);
+			P_ProjectSource (ent->client, ent->s.origin, offset, forward, right, start);
+			fire_rocket (ent, start, forward, damage, 650, damage_radius, radius_damage);
+
+			VectorSet(offset, 8, 8, ent->viewheight-8);
+			P_ProjectSource (ent->client, ent->s.origin, offset, forward, right, start);
+			fire_rocket (ent, start, forward, damage, 650, damage_radius, radius_damage);
+		}
+		else // default
+		{
+			VectorSet(offset, 8, 8, ent->viewheight-8);
+			P_ProjectSource (ent->client, ent->s.origin, offset, forward, right, start);
+			fire_rocket (ent, start, forward, damage, 650, damage_radius, radius_damage);
+		}
 	}
-	else
+	else // default rocket code
+	{
+		VectorSet(offset, 8, 8, ent->viewheight-8);
+		P_ProjectSource (ent->client, ent->s.origin, offset, forward, right, start);
 		fire_rocket (ent, start, forward, damage, 650, damage_radius, radius_damage);
+	}
 
 	// send muzzle flash
 	gi.WriteByte (svc_muzzleflash);
@@ -1163,6 +1178,16 @@ void Chaingun_Fire (edict_t *ent)
 		VectorSet(offset, 0, r, u + ent->viewheight-8);
 		P_ProjectSource (ent->client, ent->s.origin, offset, forward, right, start);
 
+		if( ent->client->pers.playerClass == CLASS_HEAVY)
+		{
+			if(ent->client->pers.tierTwoUpgradeLevel == 1)
+			{
+				fire_bullet (ent, start, forward, damage, kick, DEFAULT_BULLET_HSPREAD / 2, DEFAULT_BULLET_VSPREAD / 2, MOD_CHAINGUN);
+			}
+			else
+				fire_bullet (ent, start, forward, damage, kick, DEFAULT_BULLET_HSPREAD, DEFAULT_BULLET_VSPREAD, MOD_CHAINGUN);
+		}
+		else
 		fire_bullet (ent, start, forward, damage, kick, DEFAULT_BULLET_HSPREAD, DEFAULT_BULLET_VSPREAD, MOD_CHAINGUN);
 	}
 
@@ -1290,14 +1315,44 @@ void weapon_supershotgun_fire (edict_t *ent)
 		kick *= 4;
 	}
 
-	v[PITCH] = ent->client->v_angle[PITCH];
-	v[YAW]   = ent->client->v_angle[YAW] - 5;
-	v[ROLL]  = ent->client->v_angle[ROLL];
-	AngleVectors (v, forward, NULL, NULL);
-	fire_shotgun (ent, start, forward, damage, kick, DEFAULT_SHOTGUN_HSPREAD, DEFAULT_SHOTGUN_VSPREAD, DEFAULT_SSHOTGUN_COUNT/2, MOD_SSHOTGUN);
-	v[YAW]   = ent->client->v_angle[YAW] + 5;
-	AngleVectors (v, forward, NULL, NULL);
-	fire_shotgun (ent, start, forward, damage, kick, DEFAULT_SHOTGUN_HSPREAD, DEFAULT_SHOTGUN_VSPREAD, DEFAULT_SSHOTGUN_COUNT/2, MOD_SSHOTGUN);
+	// for an idea about amount of pellets, default shotgun shoots 12, super shotgun shoots 20
+	if( ent->client->pers.playerClass == CLASS_SUPPORT )
+	{
+		if( ent->client->pers.tierTwoUpgradeLevel == 1 )
+		{
+			v[PITCH] = ent->client->v_angle[PITCH];
+			v[YAW]   = ent->client->v_angle[YAW] - 5;
+			v[ROLL]  = ent->client->v_angle[ROLL];
+			AngleVectors (v, forward, NULL, NULL);
+			fire_shotgun (ent, start, forward, damage, kick, DEFAULT_SHOTGUN_HSPREAD, DEFAULT_SHOTGUN_VSPREAD, DEFAULT_SSHOTGUN_COUNT, MOD_SSHOTGUN);
+			v[YAW]   = ent->client->v_angle[YAW] + 5;
+			AngleVectors (v, forward, NULL, NULL);
+			fire_shotgun (ent, start, forward, damage, kick, DEFAULT_SHOTGUN_HSPREAD, DEFAULT_SHOTGUN_VSPREAD, DEFAULT_SSHOTGUN_COUNT, MOD_SSHOTGUN);
+		}
+		else // do default
+		{
+			v[PITCH] = ent->client->v_angle[PITCH];
+			v[YAW]   = ent->client->v_angle[YAW] - 5;
+			v[ROLL]  = ent->client->v_angle[ROLL];
+			AngleVectors (v, forward, NULL, NULL);
+			fire_shotgun (ent, start, forward, damage, kick, DEFAULT_SHOTGUN_HSPREAD, DEFAULT_SHOTGUN_VSPREAD, DEFAULT_SSHOTGUN_COUNT/2, MOD_SSHOTGUN);
+			v[YAW]   = ent->client->v_angle[YAW] + 5;
+			AngleVectors (v, forward, NULL, NULL);
+			fire_shotgun (ent, start, forward, damage, kick, DEFAULT_SHOTGUN_HSPREAD, DEFAULT_SHOTGUN_VSPREAD, DEFAULT_SSHOTGUN_COUNT/2, MOD_SSHOTGUN);
+		}
+
+	}
+	else // default super shotgun code
+	{
+		v[PITCH] = ent->client->v_angle[PITCH];
+		v[YAW]   = ent->client->v_angle[YAW] - 5;
+		v[ROLL]  = ent->client->v_angle[ROLL];
+		AngleVectors (v, forward, NULL, NULL);
+		fire_shotgun (ent, start, forward, damage, kick, DEFAULT_SHOTGUN_HSPREAD, DEFAULT_SHOTGUN_VSPREAD, DEFAULT_SSHOTGUN_COUNT/2, MOD_SSHOTGUN);
+		v[YAW]   = ent->client->v_angle[YAW] + 5;
+		AngleVectors (v, forward, NULL, NULL);
+		fire_shotgun (ent, start, forward, damage, kick, DEFAULT_SHOTGUN_HSPREAD, DEFAULT_SHOTGUN_VSPREAD, DEFAULT_SSHOTGUN_COUNT/2, MOD_SSHOTGUN);
+	}
 
 	// send muzzle flash
 	gi.WriteByte (svc_muzzleflash);

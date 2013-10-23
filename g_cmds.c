@@ -1160,11 +1160,14 @@ void Cmd_BuyTierOne(edict_t *ent)
 	grenadeLauncherIndex = ITEM_INDEX(weapon);
 	
 
-	if(ent->client->pers.tierOneUpgradeLevel == 0)
+	// if our class is support
+	if(ent->client->pers.playerClass == CLASS_SUPPORT)
 	{
-		if(ent->client->pers.playerClass == CLASS_SUPPORT)
+		// if we have a shotgun
+		if( ent->client->pers.inventory[shotgunIndex] > 0 )
 		{
-			if( ent->client->pers.inventory[shotgunIndex] > 0 )
+			// if we have a 0 lvl gun
+			if(ent->client->pers.tierOneUpgradeLevel == 0)
 			{
 				// perform the lvl 1 upgrade
 				if(ent->client->pers.cash >= 200)
@@ -1176,51 +1179,134 @@ void Cmd_BuyTierOne(edict_t *ent)
 				else
 					gi.cprintf (ent, PRINT_CHAT, "Not enough dosh.\n");
 			}
-			else
+			else // we have a lvl 1 gun
+			if(ent->client->pers.tierOneUpgradeLevel == 1)
 			{
-				if(ent->client->pers.cash >= 100)
+				// upgrade to 2
+				if(ent->client->pers.cash >= 300)
 				{
-					ent->client->pers.cash -= 100;
-					Cmd_BuyShotgun(ent);
+					ent->client->pers.cash -= 300;
+					ent->client->pers.tierOneUpgradeLevel = 2;
+					gi.cprintf (ent, PRINT_CHAT, "You upgraded your Shotgun to LVL 2.\n");
 				}
 				else
 					gi.cprintf (ent, PRINT_CHAT, "Not enough dosh.\n");
+			}
+			else // we have a lvl 2 gun
+			if(ent->client->pers.tierOneUpgradeLevel == 2)
+			{
+				//upgrade to 3
+				if(ent->client->pers.cash >= 400)
+				{
+					ent->client->pers.cash -= 400;
+					ent->client->pers.tierOneUpgradeLevel = 3;
+					gi.cprintf (ent, PRINT_CHAT, "You upgraded your Shotgun to LVL 3.\n");
+				}
+				else
+					gi.cprintf (ent, PRINT_CHAT, "Not enough dosh.\n");
+			}
+			else // we have a lvl 3 or higher gun
+			if(ent->client->pers.tierOneUpgradeLevel >= 3)
+			{
+				gi.cprintf (ent, PRINT_CHAT, "Your Shotgun upgrades are maxed out!\n");
+			}
+			else // our gun lvl got messed up and is undefined
+			{
+				gi.cprintf (ent, PRINT_CHAT, "That's weird. Your Shotgun upgrade level is undefined.\n");
+			}
 
-			}
-					
 		}
-		else
-		if( ent->client->pers.playerClass == CLASS_HEAVY)
+		else // we are support class and dont have a shotgun
 		{
-			if(ent->client->pers.inventory[machinegunIndex] > 0 )
+			if(ent->client->pers.cash >= 100)
 			{
-				// perform the lvl 1 upgrade
-				if(ent->client->pers.cash >= 200)
-				{
-					ent->client->pers.cash -= 200;
-					ent->client->pers.tierOneUpgradeLevel = 1;
-					gi.cprintf (ent, PRINT_CHAT, "You upgraded your Machinegun to LVL 1.\n");
-				}
-				else
-					gi.cprintf (ent, PRINT_CHAT, "Not enough dosh.\n");
+				ent->client->pers.cash -= 100;
+				Cmd_BuyShotgun(ent);
 			}
 			else
-			{
-				if(ent->client->pers.cash >= 100)
-				{
-					ent->client->pers.cash -= 100;
-					Cmd_BuyMachinegun(ent);
-				}
-				else
-					gi.cprintf (ent, PRINT_CHAT, "Not enough dosh.\n");
-			}
+				gi.cprintf (ent, PRINT_CHAT, "Not enough dosh.\n");
 		}
-		else
-		if(ent->client->pers.playerClass == CLASS_DEMO)
+					
+	}
+	else // if we are heavy class
+	if( ent->client->pers.playerClass == CLASS_HEAVY)
+	{
+		// if we have a machinegun
+		if(ent->client->pers.inventory[machinegunIndex] > 0 )
 		{
-			if(ent->client->pers.inventory[grenadeLauncherIndex] > 0 )
+				// if we have a 0 lvl gun
+				if(ent->client->pers.tierOneUpgradeLevel == 0)
+				{
+					// upgrade to 1
+					if(ent->client->pers.cash >= 200)
+					{
+						ent->client->pers.cash -= 200;
+						ent->client->pers.tierOneUpgradeLevel = 1;
+						gi.cprintf (ent, PRINT_CHAT, "You upgraded your Machinegun to LVL 1.\n");
+					}
+					else
+						gi.cprintf (ent, PRINT_CHAT, "Not enough dosh.\n");
+				}
+				else // if we have lvl 1 gun
+				if(ent->client->pers.tierOneUpgradeLevel == 1)
+				{
+					// upgrade to 2
+					if(ent->client->pers.cash >= 300)
+					{
+						ent->client->pers.cash -= 300;
+						ent->client->pers.tierOneUpgradeLevel = 2;
+						gi.cprintf (ent, PRINT_CHAT, "You upgraded your Machinegun to LVL 2.\n");
+
+					}
+					else
+						gi.cprintf (ent, PRINT_CHAT, "Not enough dosh.\n");
+				}
+				else // if we have a lvl 2 gun
+				if(ent->client->pers.tierOneUpgradeLevel == 2)
+				{
+					//upgrade to 3
+					if(ent->client->pers.cash >= 400)
+					{
+						ent->client->pers.cash -= 400;
+						ent->client->pers.tierOneUpgradeLevel = 3;
+						gi.cprintf (ent, PRINT_CHAT, "You upgraded your Machinegun to LVL 3.\n");
+					}
+					else
+						gi.cprintf (ent, PRINT_CHAT, "Not enough dosh.\n");
+				}
+				else // we have a lvl 3 or higher gun
+				if(ent->client->pers.tierOneUpgradeLevel >= 3)
+				{
+					gi.cprintf (ent, PRINT_CHAT, "Your Machinegun upgrades are maxed out!\n");
+				}
+				else // our gun lvl got messed up and is undefined
+				{
+					gi.cprintf (ent, PRINT_CHAT, "That's weird. Your Machinegun upgrade level is undefined.\n");
+				}
+
+
+		}
+		else // we are Heavy but dont have a machingun
+		{	
+			if(ent->client->pers.cash >= 100)
 			{
-				// perform the lvl 1 upgrade
+				ent->client->pers.cash -= 100;
+				Cmd_BuyMachinegun(ent);
+			}
+			else
+				gi.cprintf (ent, PRINT_CHAT, "Not enough dosh.\n");
+		}
+	}
+	else // if we are a demo
+	if(ent->client->pers.playerClass == CLASS_DEMO)
+	{
+		// if we have a grenade launcher
+		if(ent->client->pers.inventory[grenadeLauncherIndex] > 0 )
+		{
+			// if we have a lvl 0 gun
+			if(ent->client->pers.tierOneUpgradeLevel == 0)
+			{
+				// upgrade to 1
 				if(ent->client->pers.cash >= 200)
 				{
 					ent->client->pers.cash -= 200;
@@ -1230,108 +1316,60 @@ void Cmd_BuyTierOne(edict_t *ent)
 				else
 					gi.cprintf (ent, PRINT_CHAT, "Not enough dosh.\n");
 			}
-			else
+			else // if we have a lvl 1 gun
+			if(ent->client->pers.tierOneUpgradeLevel == 1)
 			{
-				if(ent->client->pers.cash >= 100)
+				//upgrade to 2
+				if(ent->client->pers.cash >= 300)
 				{
-					ent->client->pers.cash -= 100;
-					Cmd_BuyGrenadeLauncher(ent);
+					ent->client->pers.cash -= 300;
+					ent->client->pers.tierOneUpgradeLevel = 2;
+					gi.cprintf (ent, PRINT_CHAT, "You upgraded your Grenade Launcher to LVL 2.\n");
 				}
 				else
 					gi.cprintf (ent, PRINT_CHAT, "Not enough dosh.\n");
 			}
-		}
-		else
-		{
-			gi.cprintf (ent, PRINT_CHAT, "You need to set your class first dummy!\n");
-		}
-	}
-	else
-	if(ent->client->pers.tierOneUpgradeLevel == 1)
-	{
-		// upgrade to 2
-		if(ent->client->pers.playerClass == CLASS_SUPPORT)
-		{
-			if(ent->client->pers.cash >= 200)
+			else // if we have a lvl 2 gun
+			if(ent->client->pers.tierOneUpgradeLevel == 2)
 			{
-				ent->client->pers.cash -= 200;
-				ent->client->pers.tierOneUpgradeLevel = 2;
-				gi.cprintf (ent, PRINT_CHAT, "You upgraded your Shotgun to LVL 2.\n");
+				//upgrade to 3
+				if(ent->client->pers.cash >= 400)
+				{
+					ent->client->pers.cash -= 400;
+					ent->client->pers.tierOneUpgradeLevel = 3;
+					gi.cprintf (ent, PRINT_CHAT, "You upgraded your Grenade Launcher to LVL 3.\n");
+				}
+				else
+					gi.cprintf (ent, PRINT_CHAT, "Not enough dosh.\n");
 			}
-			else
-				gi.cprintf (ent, PRINT_CHAT, "Not enough dosh.\n");
-		}
-		else
-		if(ent->client->pers.playerClass == CLASS_HEAVY)
-		{
-			if(ent->client->pers.cash >= 200)
+			else // if our gun is lvl 3 or higher
+			if(ent->client->pers.tierOneUpgradeLevel >= 3)
 			{
-				ent->client->pers.tierOneUpgradeLevel = 2;
-				gi.cprintf (ent, PRINT_CHAT, "You upgraded your Machinegun to LVL 2.\n");
+				gi.cprintf (ent, PRINT_CHAT, "Your Grenade Launcher upgrades are maxed out!\n");
 			}
-			else
-				gi.cprintf (ent, PRINT_CHAT, "Not enough dosh.\n");
-		}
-		else
-		if(ent->client->pers.playerClass == CLASS_DEMO)
-		{
-			if(ent->client->pers.cash >= 200)
+			else // our gun lvl got messed up and is undefined
 			{
-				ent->client->pers.tierOneUpgradeLevel = 2;
-				gi.cprintf (ent, PRINT_CHAT, "You upgraded your Grenade Launcher to LVL 2.\n");
+				gi.cprintf (ent, PRINT_CHAT, "That's weird. Your Grenade Launcher upgrade level is undefined.\n");
 			}
-			else
-				gi.cprintf (ent, PRINT_CHAT, "Not enough dosh.\n");
-		}
-	}
-	else
-	if(ent->client->pers.tierOneUpgradeLevel == 2)
-	{
-		// upgrade to 3
-		if(ent->client->pers.playerClass == CLASS_SUPPORT)
-		{
-			if(ent->client->pers.cash >= 200)
-			{
-				ent->client->pers.tierOneUpgradeLevel = 3;
-				gi.cprintf (ent, PRINT_CHAT, "You upgraded your Shotgun to LVL 3.\n");
-			}
-			else
-				gi.cprintf (ent, PRINT_CHAT, "Not enough dosh.\n");
-		}
-		else
-		if(ent->client->pers.playerClass == CLASS_HEAVY)
-		{
-			if(ent->client->pers.cash >= 200)
-			{
-				ent->client->pers.tierOneUpgradeLevel = 3;
-				gi.cprintf (ent, PRINT_CHAT, "You upgraded your Machinegun to LVL 3.\n");
-			}
-			else
-				gi.cprintf (ent, PRINT_CHAT, "Not enough dosh.\n");
-		}
-		else
-		if(ent->client->pers.playerClass == CLASS_DEMO)
-		{
-			if(ent->client->pers.cash >= 200)
-			{
-				ent->client->pers.tierOneUpgradeLevel = 3;
-				gi.cprintf (ent, PRINT_CHAT, "You upgraded your Grenade Launcher to LVL 3.\n");
-			}
-			else
-				gi.cprintf (ent, PRINT_CHAT, "Not enough dosh.\n");
-		}
-	}
-	else
-	if(ent->client->pers.tierOneUpgradeLevel >= 3)
-	{
-		gi.cprintf (ent, PRINT_CHAT, "Your tier one upgrade is maxed out!\n");
-	}
-	else 
-	{
-		gi.cprintf (ent, PRINT_CHAT, "That's weird. Your tier one upgrade level is undefined.\n");
-	}
 
-
+		}
+		else // we are demo but dont have a grenade launcher
+		{
+			if(ent->client->pers.cash >= 100)
+			{
+				ent->client->pers.cash -= 100;
+				Cmd_BuyGrenadeLauncher(ent);
+			}
+			else
+				gi.cprintf (ent, PRINT_CHAT, "Not enough dosh.\n");
+		}
+			
+	}
+	else // we are not Support, Heavy, or Demo
+	{
+		gi.cprintf (ent, PRINT_CHAT, "You need to set your class first dummy!\n");
+	}
+	
 }
 
 void Cmd_BuyTierTwo(edict_t *ent)
@@ -1348,180 +1386,204 @@ void Cmd_BuyTierTwo(edict_t *ent)
 	weapon = FindItem("Rocket Launcher"); 
 	rocketLauncherIndex = ITEM_INDEX(weapon);
 
-	if(ent->client->pers.tierTwoUpgradeLevel == 0)
+	// if our class is support
+	if(ent->client->pers.playerClass == CLASS_SUPPORT)
 	{
-		if(ent->client->pers.playerClass == CLASS_SUPPORT)
+		// if we have a Super Shotgun
+		if( ent->client->pers.inventory[superShotgunIndex] > 0 )
 		{
-			if( ent->client->pers.inventory[superShotgunIndex] > 0 )
+			// if our gun is lvl 0
+			if(ent->client->pers.tierTwoUpgradeLevel == 0)
 			{
-				// perform the lvl 1 upgrade
+				// upgrade to 1
 				if(ent->client->pers.cash >= 300)
 				{
+					ent->client->pers.cash -= 300;
 					ent->client->pers.tierTwoUpgradeLevel = 1;
 				}
 				else
 					gi.cprintf (ent, PRINT_CHAT, "Not enough dosh.\n");
 			}
-			else
+			else // if our gun is lvl 1
+			if(ent->client->pers.tierTwoUpgradeLevel == 1)
 			{
-				if(ent->client->pers.cash >= 200)
+				// upgrade to 2
+				if(ent->client->pers.cash >= 400)
 				{
-					ent->client->pers.cash -= 200;
-					Cmd_BuySuperShotgun(ent);
+					ent->client->pers.cash -= 400;
+					ent->client->pers.tierTwoUpgradeLevel = 2;
 				}
 				else
 					gi.cprintf (ent, PRINT_CHAT, "Not enough dosh.\n");
-
 			}
-		
-		}
-		else
-		if( ent->client->pers.playerClass == CLASS_HEAVY)
-		{
-			if( ent->client->pers.inventory[chaingunIndex] > 0 )
+			else // if our gun is lvl 2
+			if(ent->client->pers.tierTwoUpgradeLevel == 2)
 			{
-				// perform the lvl 1 upgrade
+				// upgrade to 3
+				if(ent->client->pers.cash >= 500)
+				{
+					ent->client->pers.cash -= 500;
+					ent->client->pers.tierTwoUpgradeLevel = 3;
+				}
+				else
+					gi.cprintf (ent, PRINT_CHAT, "Not enough dosh.\n");
+			}
+			else // if your gun is lvl 3 or higher
+			if(ent->client->pers.tierTwoUpgradeLevel >= 3)
+			{
+				gi.cprintf (ent, PRINT_CHAT, "Your Super Shotgun upgrades are maxed out!\n");
+			}
+			else  // our gun lvl is undefined
+			{
+				gi.cprintf (ent, PRINT_CHAT, "That's weird. Your Super Shotgun upgrade level is undefined.\n");
+			}
+
+		}
+		else // if we dont have a Super Shotgun
+		{
+			if(ent->client->pers.cash >= 200)
+			{
+				ent->client->pers.cash -= 200;
+				Cmd_BuySuperShotgun(ent);
+			}
+			else
+				gi.cprintf (ent, PRINT_CHAT, "Not enough dosh.\n");
+		}
+
+	}
+	else // if we are a Heavy
+	if( ent->client->pers.playerClass == CLASS_HEAVY)
+	{
+		// if we have a Chaingun
+		if( ent->client->pers.inventory[chaingunIndex] > 0 )
+		{
+			// if our gun is lvl 0
+			if(ent->client->pers.tierTwoUpgradeLevel == 0)
+			{
+				// upgrade to 1
 				if(ent->client->pers.cash >= 300)
 				{
+					ent->client->pers.cash -= 300;
 					ent->client->pers.tierTwoUpgradeLevel = 1;
 				}
 				else
 					gi.cprintf (ent, PRINT_CHAT, "Not enough dosh.\n");
 			}
-			else
+			else // if our gun is lvl 1
+			if(ent->client->pers.tierTwoUpgradeLevel == 1)
 			{
-				if(ent->client->pers.cash >= 200)
+				// upgrade to 2
+				if(ent->client->pers.cash >= 400)
 				{
-					ent->client->pers.cash -= 200;
-					Cmd_BuyChaingun(ent);
+					ent->client->pers.cash -= 400;
+					ent->client->pers.tierTwoUpgradeLevel = 2;
 				}
 				else
 					gi.cprintf (ent, PRINT_CHAT, "Not enough dosh.\n");
-
 			}
-		
-		}
-		else
-		if(ent->client->pers.playerClass == CLASS_DEMO)
-		{
-			if( ent->client->pers.inventory[rocketLauncherIndex] > 0 )
+			else // if our gun is lvl 2
+			if(ent->client->pers.tierTwoUpgradeLevel == 2)
 			{
-				// perform the lvl 1 upgrade
+				// upgrade to 3
+				if(ent->client->pers.cash >= 500)
+				{
+					ent->client->pers.cash -= 500;
+					ent->client->pers.tierTwoUpgradeLevel = 3;
+				}
+				else
+					gi.cprintf (ent, PRINT_CHAT, "Not enough dosh.\n");
+			}
+			else // if your gun is lvl 3 or higher
+			if(ent->client->pers.tierTwoUpgradeLevel >= 3)
+			{
+				gi.cprintf (ent, PRINT_CHAT, "Your Chaingun upgrades are maxed out!\n");
+			}
+			else  // our gun lvl is undefined
+			{
+				gi.cprintf (ent, PRINT_CHAT, "That's weird. Your Chaingun upgrade level is undefined.\n");
+			}
+
+		}
+		else // we are Heavy but dont have a Chaingun
+		{
+			if(ent->client->pers.cash >= 200)
+			{
+				ent->client->pers.cash -= 200;
+				Cmd_BuyChaingun(ent);
+			}
+			else
+				gi.cprintf (ent, PRINT_CHAT, "Not enough dosh.\n");
+		}
+
+	}
+	else // if we are Demo
+	if(ent->client->pers.playerClass == CLASS_DEMO)
+	{
+		// if we have a Rocket Launcher
+		if( ent->client->pers.inventory[rocketLauncherIndex] > 0 )
+		{
+			// if our gun is lvl 0
+			if(ent->client->pers.tierTwoUpgradeLevel == 0)
+			{
+				// upgrade to 1
 				if(ent->client->pers.cash >= 300)
 				{
+					ent->client->pers.cash -= 300;
 					ent->client->pers.tierTwoUpgradeLevel = 1;
 				}
 				else
 					gi.cprintf (ent, PRINT_CHAT, "Not enough dosh.\n");
 			}
-			else
+			else // if our gun is lvl 1
+			if(ent->client->pers.tierTwoUpgradeLevel == 1)
 			{
-				if(ent->client->pers.cash >= 200)
+				// upgrade to 2
+				if(ent->client->pers.cash >= 400)
 				{
-					ent->client->pers.cash -= 200;
-					Cmd_BuyRocketLauncher(ent);
+					ent->client->pers.cash -= 400;
+					ent->client->pers.tierTwoUpgradeLevel = 2;
+				}
+				else
+				gi.cprintf (ent, PRINT_CHAT, "Not enough dosh.\n");
+			}
+			else // if our gun is lvl 2
+			if(ent->client->pers.tierTwoUpgradeLevel == 2)
+			{
+				// upgrade to 3
+				if(ent->client->pers.cash >= 500)
+				{
+					ent->client->pers.cash -= 500;
+					ent->client->pers.tierTwoUpgradeLevel = 3;
 				}
 				else
 					gi.cprintf (ent, PRINT_CHAT, "Not enough dosh.\n");
-
 			}
-		
+			else // if your gun is lvl 3 or higher
+			if(ent->client->pers.tierTwoUpgradeLevel >= 3)
+			{
+				gi.cprintf (ent, PRINT_CHAT, "Your Rocket Launcher upgrades are maxed out!\n");
+			}
+			else  // our gun lvl is undefined
+			{
+				gi.cprintf (ent, PRINT_CHAT, "That's weird. Your Rocket Launcher upgrade level is undefined.\n");
+			}
 		}
-		else
+		else // we are Demo but dont have a rocket launcher
 		{
-			gi.cprintf (ent, PRINT_CHAT, "You need to set your class first dummy!\n");
+			if(ent->client->pers.cash >= 200)
+			{
+				ent->client->pers.cash -= 200;
+				Cmd_BuyRocketLauncher(ent);
+			}
+			else
+				gi.cprintf (ent, PRINT_CHAT, "Not enough dosh.\n");
 		}
-
 	}
-	else
-	if(ent->client->pers.tierTwoUpgradeLevel == 1)
+	else // we are not Support, Heavy, or Demo
 	{
-		if(ent->client->pers.playerClass == CLASS_SUPPORT)
-		{
-			//perform the lvl 2 upgrade
-			if(ent->client->pers.cash >= 300)
-			{
-				ent->client->pers.tierTwoUpgradeLevel = 2;
-			}
-			else
-				gi.cprintf (ent, PRINT_CHAT, "Not enough dosh.\n");
-		}
-		else
-		if(ent->client->pers.playerClass == CLASS_HEAVY)
-		{
-			//perform the lvl 2 upgrade
-			if(ent->client->pers.cash >= 300)
-			{
-				ent->client->pers.tierTwoUpgradeLevel = 2;
-			}
-			else
-				gi.cprintf (ent, PRINT_CHAT, "Not enough dosh.\n");
-		}
-		else
-		if(ent->client->pers.playerClass == CLASS_DEMO)
-		{
-			//perform the lvl 2 upgrade
-			if(ent->client->pers.cash >= 300)
-			{
-				ent->client->pers.tierTwoUpgradeLevel = 2;
-			}
-			else
-				gi.cprintf (ent, PRINT_CHAT, "Not enough dosh.\n");
-		}
-		else
-		{
-			gi.cprintf (ent, PRINT_CHAT, "You need to set your class first dummy!\n");
-		}
+		gi.cprintf (ent, PRINT_CHAT, "You need to set your class first dummy!\n");
 	}
-	else
-	if(ent->client->pers.tierTwoUpgradeLevel == 2)
-	{
-		if(ent->client->pers.playerClass == CLASS_SUPPORT)
-		{
-			//perform the lvl 3 upgrade
-			if(ent->client->pers.cash >= 300)
-			{
-				ent->client->pers.tierTwoUpgradeLevel = 3;
-			}
-			else
-				gi.cprintf (ent, PRINT_CHAT, "Not enough dosh.\n");
-		}
-		else
-		if(ent->client->pers.playerClass == CLASS_HEAVY)
-		{
-			//perform the lvl 3 upgrade
-			if(ent->client->pers.cash >= 300)
-			{
-				ent->client->pers.tierTwoUpgradeLevel = 3;
-			}
-			else
-				gi.cprintf (ent, PRINT_CHAT, "Not enough dosh.\n");
-		}
-		else
-		if(ent->client->pers.playerClass == CLASS_DEMO)
-		{
-			//perform the lvl 3 upgrade
-			if(ent->client->pers.cash >= 300)
-			{
-				ent->client->pers.tierTwoUpgradeLevel = 3;
-			}
-			else
-				gi.cprintf (ent, PRINT_CHAT, "Not enough dosh.\n");
-		}
-		else
-		{
-			gi.cprintf (ent, PRINT_CHAT, "You need to set your class first dummy!\n");
-		}
-	}
-	else
-	if(ent->client->pers.tierTwoUpgradeLevel >= 3)
-	{
-		gi.cprintf (ent, PRINT_CHAT, "Your tier two upgrade is maxed out!\n");
-	}
-	else 
-	{
-		gi.cprintf (ent, PRINT_CHAT, "That's weird. Your tier two upgrade level is undefined.\n");
-	}
+	
 }
 
 void Cmd_BuyShells(edict_t *ent)
