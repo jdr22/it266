@@ -196,6 +196,10 @@ void ClientObituary (edict_t *self, edict_t *inflictor, edict_t *attacker)
 	char		*message2;
 	qboolean	ff;
 
+	//stuff I added
+	if(attacker->client)
+		attacker->client->pers.cash += 1000;
+
 	if (coop->value && attacker->client)
 		meansOfDeath |= MOD_FRIENDLY_FIRE;
 

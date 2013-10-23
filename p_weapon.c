@@ -716,15 +716,35 @@ void weapon_grenadelauncher_fire (edict_t *ent)
 			fire_grenade (ent, start, forward, damage, 500, 2.5, radius);
 		}
 		else
+		if(ent->client->pers.tierOneUpgradeLevel == 2)
+		{
+			fire_grenade (ent, start, forward, damage, 700, 2.5, radius);
+			fire_grenade (ent, start, forward, damage, 600, 2.5, radius);
+			fire_grenade (ent, start, forward, damage, 500, 2.5, radius);
+			fire_grenade (ent, start, forward, damage, 400, 2.5, radius);
+		}
+		else
+		if(ent->client->pers.tierOneUpgradeLevel == 3)
+		{
+			fire_grenade (ent, start, forward, damage, 700, 2.5, radius);
+			fire_grenade (ent, start, forward, damage, 650, 2.5, radius);
+			fire_grenade (ent, start, forward, damage, 600, 2.5, radius);
+			fire_grenade (ent, start, forward, damage, 550, 2.5, radius);
+			fire_grenade (ent, start, forward, damage, 500, 2.5, radius);
+			fire_grenade (ent, start, forward, damage, 400, 2.5, radius);
+		}
+		else
 			fire_grenade (ent, start, forward, damage, 600, 2.5, radius);
 	}
 	else
 		fire_grenade (ent, start, forward, damage, 600, 2.5, radius);
 
+	
 	gi.WriteByte (svc_muzzleflash);
 	gi.WriteShort (ent-g_edicts);
 	gi.WriteByte (MZ_GRENADE | is_silenced);
 	gi.multicast (ent->s.origin, MULTICAST_PVS);
+
 
 	ent->client->ps.gunframe++;
 
@@ -786,6 +806,49 @@ void Weapon_RocketLauncher_Fire (edict_t *ent)
 			VectorSet(offset, 8, 8, ent->viewheight-8);
 			P_ProjectSource (ent->client, ent->s.origin, offset, forward, right, start);
 			fire_rocket (ent, start, forward, damage, 650, damage_radius, radius_damage);
+		}
+		else
+		if(ent->client->pers.tierTwoUpgradeLevel == 2)
+		{
+			VectorSet(offset, 4, 4, ent->viewheight-8);
+			P_ProjectSource (ent->client, ent->s.origin, offset, forward, right, start);
+			fire_rocket (ent, start, forward, damage, 650, damage_radius, radius_damage);
+
+			VectorSet(offset, -4, -4, ent->viewheight-8);
+			P_ProjectSource (ent->client, ent->s.origin, offset, forward, right, start);
+			fire_rocket (ent, start, forward, damage, 650, damage_radius, radius_damage);
+
+			VectorSet(offset, -8, -8, ent->viewheight-8);
+			P_ProjectSource (ent->client, ent->s.origin, offset, forward, right, start);
+			fire_rocket (ent, start, forward, damage, 650, damage_radius, radius_damage);
+
+			VectorSet(offset, 8, 8, ent->viewheight-8);
+			P_ProjectSource (ent->client, ent->s.origin, offset, forward, right, start);
+			fire_rocket (ent, start, forward, damage, 650, damage_radius, radius_damage);
+
+		}
+		else
+		if(ent->client->pers.tierTwoUpgradeLevel == 3)
+		{
+			VectorSet(offset, 4, 4, ent->viewheight-8);
+			P_ProjectSource (ent->client, ent->s.origin, offset, forward, right, start);
+			fire_rocket (ent, start, forward, damage, 650, damage_radius, radius_damage);
+
+			VectorSet(offset, -4, -4, ent->viewheight-8);
+			P_ProjectSource (ent->client, ent->s.origin, offset, forward, right, start);
+			fire_rocket (ent, start, forward, damage, 650, damage_radius, radius_damage);
+
+			VectorSet(offset, -8, -8, ent->viewheight-8);
+			P_ProjectSource (ent->client, ent->s.origin, offset, forward, right, start);
+			fire_rocket (ent, start, forward, damage, 650, damage_radius, radius_damage);
+
+			VectorSet(offset, 8, 8, ent->viewheight-8);
+			P_ProjectSource (ent->client, ent->s.origin, offset, forward, right, start);
+			fire_rocket (ent, start, forward, damage, 650, damage_radius, radius_damage);
+
+			VectorSet(offset, 8, 8, ent->viewheight-8);
+			P_ProjectSource (ent->client, ent->s.origin, offset, forward, right, start);
+			fire_bfg (ent, start, forward, damage, 400, damage_radius);
 		}
 		else // default
 		{
@@ -1035,7 +1098,17 @@ void Machinegun_Fire (edict_t *ent)
 	{
 		if(ent->client->pers.tierOneUpgradeLevel == 1)
 		{
-			fire_bullet (ent, start, forward, damage, kick, 0, 0, MOD_MACHINEGUN);
+			fire_bullet (ent, start, forward, damage, kick, DEFAULT_BULLET_HSPREAD / 2 , DEFAULT_BULLET_VSPREAD / 2, MOD_MACHINEGUN);
+		}
+		else
+		if(ent->client->pers.tierOneUpgradeLevel == 2)
+		{
+			fire_bullet (ent, start, forward, damage, kick, 0 , 0, MOD_MACHINEGUN);
+		}
+		else
+		if(ent->client->pers.tierOneUpgradeLevel == 3)
+		{
+			fire_bullet (ent, start, forward, damage * 2, kick / 2,0,0, MOD_MACHINEGUN);
 		}
 		else
 			fire_bullet (ent, start, forward, damage, kick, DEFAULT_BULLET_HSPREAD, DEFAULT_BULLET_VSPREAD, MOD_MACHINEGUN);
@@ -1185,6 +1258,16 @@ void Chaingun_Fire (edict_t *ent)
 				fire_bullet (ent, start, forward, damage, kick, DEFAULT_BULLET_HSPREAD / 2, DEFAULT_BULLET_VSPREAD / 2, MOD_CHAINGUN);
 			}
 			else
+			if(ent->client->pers.tierTwoUpgradeLevel == 2)
+			{
+				fire_bullet (ent, start, forward, damage, kick, 0, 0, MOD_CHAINGUN);
+			}
+			else
+			if(ent->client->pers.tierTwoUpgradeLevel == 3)
+			{
+				fire_bullet (ent, start, forward, damage * 2, kick / 2, 0, 0, MOD_CHAINGUN);
+			}
+			else
 				fire_bullet (ent, start, forward, damage, kick, DEFAULT_BULLET_HSPREAD, DEFAULT_BULLET_VSPREAD, MOD_CHAINGUN);
 		}
 		else
@@ -1264,6 +1347,16 @@ void weapon_shotgun_fire (edict_t *ent)
 			fire_shotgun (ent, start, forward, damage, kick, 50, 50, DEFAULT_DEATHMATCH_SHOTGUN_COUNT, MOD_SHOTGUN);
 		}
 		else
+		if(ent->client->pers.tierOneUpgradeLevel == 2)
+		{
+			fire_shotgun (ent, start, forward, damage, kick, 100, 100, DEFAULT_DEATHMATCH_SHOTGUN_COUNT * 2, MOD_SHOTGUN);
+		}
+		else
+		if(ent->client->pers.tierOneUpgradeLevel == 3)
+		{
+			fire_shotgun (ent, start, forward, damage, kick, 200, 125, DEFAULT_DEATHMATCH_SHOTGUN_COUNT * 4, MOD_SHOTGUN);
+		}
+		else
 			fire_shotgun (ent, start, forward, damage, kick, 500, 500, DEFAULT_DEATHMATCH_SHOTGUN_COUNT, MOD_SHOTGUN);
 	}
 	else
@@ -1328,6 +1421,30 @@ void weapon_supershotgun_fire (edict_t *ent)
 			v[YAW]   = ent->client->v_angle[YAW] + 5;
 			AngleVectors (v, forward, NULL, NULL);
 			fire_shotgun (ent, start, forward, damage, kick, DEFAULT_SHOTGUN_HSPREAD, DEFAULT_SHOTGUN_VSPREAD, DEFAULT_SSHOTGUN_COUNT, MOD_SSHOTGUN);
+		}
+		else
+		if (ent->client->pers.tierTwoUpgradeLevel == 2)
+		{
+			v[PITCH] = ent->client->v_angle[PITCH];
+			v[YAW]   = ent->client->v_angle[YAW] - 5;
+			v[ROLL]  = ent->client->v_angle[ROLL];
+			AngleVectors (v, forward, NULL, NULL);
+			fire_shotgun (ent, start, forward, damage, kick, DEFAULT_SHOTGUN_HSPREAD + 250, DEFAULT_SHOTGUN_VSPREAD + 100, DEFAULT_SSHOTGUN_COUNT * 2, MOD_SSHOTGUN);
+			v[YAW]   = ent->client->v_angle[YAW] + 5;
+			AngleVectors (v, forward, NULL, NULL);
+			fire_shotgun (ent, start, forward, damage, kick, DEFAULT_SHOTGUN_HSPREAD + 250, DEFAULT_SHOTGUN_VSPREAD + 100, DEFAULT_SSHOTGUN_COUNT * 2, MOD_SSHOTGUN);
+		}
+		else
+		if (ent->client->pers.tierTwoUpgradeLevel == 3)
+		{
+			v[PITCH] = ent->client->v_angle[PITCH];
+			v[YAW]   = ent->client->v_angle[YAW] - 5;
+			v[ROLL]  = ent->client->v_angle[ROLL];
+			AngleVectors (v, forward, NULL, NULL);
+			fire_shotgun (ent, start, forward, damage, kick, DEFAULT_SHOTGUN_HSPREAD + 500, DEFAULT_SHOTGUN_VSPREAD + 200, DEFAULT_SSHOTGUN_COUNT * 3, MOD_SSHOTGUN);
+			v[YAW]   = ent->client->v_angle[YAW] + 5;
+			AngleVectors (v, forward, NULL, NULL);
+			fire_shotgun (ent, start, forward, damage, kick, DEFAULT_SHOTGUN_HSPREAD + 500, DEFAULT_SHOTGUN_VSPREAD + 200, DEFAULT_SSHOTGUN_COUNT * 3, MOD_SSHOTGUN);
 		}
 		else // do default
 		{

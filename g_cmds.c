@@ -900,6 +900,8 @@ void Cmd_SetClass(edict_t *ent)
 		client->pers.playerClass = 1; // set current
 		client->pers.tierOneUpgradeLevel = 0; // no upgrades yet
 		client->pers.max_shells = 999;
+		ent->max_health = 125;
+		ent->health = ent->max_health;
 	}
 	else
 	if(i == CLASS_HEAVY )
@@ -919,6 +921,8 @@ void Cmd_SetClass(edict_t *ent)
 		client->pers.tierOneUpgradeLevel = 0;
 		client->pers.max_grenades = 999;
 		client->pers.max_rockets = 999;
+		ent->max_health = 200;
+		ent->health = ent->max_health;
 	} 
 	else
 	{
@@ -1400,6 +1404,7 @@ void Cmd_BuyTierTwo(edict_t *ent)
 				{
 					ent->client->pers.cash -= 300;
 					ent->client->pers.tierTwoUpgradeLevel = 1;
+					gi.cprintf (ent, PRINT_CHAT, "You upgraded your Super Shotgun to LVL 1.\n");
 				}
 				else
 					gi.cprintf (ent, PRINT_CHAT, "Not enough dosh.\n");
@@ -1412,6 +1417,7 @@ void Cmd_BuyTierTwo(edict_t *ent)
 				{
 					ent->client->pers.cash -= 400;
 					ent->client->pers.tierTwoUpgradeLevel = 2;
+					gi.cprintf (ent, PRINT_CHAT, "You upgraded your Super Shotgun to LVL 2.\n");
 				}
 				else
 					gi.cprintf (ent, PRINT_CHAT, "Not enough dosh.\n");
@@ -1424,6 +1430,7 @@ void Cmd_BuyTierTwo(edict_t *ent)
 				{
 					ent->client->pers.cash -= 500;
 					ent->client->pers.tierTwoUpgradeLevel = 3;
+					gi.cprintf (ent, PRINT_CHAT, "You upgraded your Super Shotgun to LVL 3.\n");
 				}
 				else
 					gi.cprintf (ent, PRINT_CHAT, "Not enough dosh.\n");
@@ -1465,6 +1472,7 @@ void Cmd_BuyTierTwo(edict_t *ent)
 				{
 					ent->client->pers.cash -= 300;
 					ent->client->pers.tierTwoUpgradeLevel = 1;
+					gi.cprintf (ent, PRINT_CHAT, "You upgraded your Chaingun to LVL 1.\n");
 				}
 				else
 					gi.cprintf (ent, PRINT_CHAT, "Not enough dosh.\n");
@@ -1477,6 +1485,7 @@ void Cmd_BuyTierTwo(edict_t *ent)
 				{
 					ent->client->pers.cash -= 400;
 					ent->client->pers.tierTwoUpgradeLevel = 2;
+					gi.cprintf (ent, PRINT_CHAT, "You upgraded your Chaingun to LVL 2.\n");
 				}
 				else
 					gi.cprintf (ent, PRINT_CHAT, "Not enough dosh.\n");
@@ -1489,6 +1498,7 @@ void Cmd_BuyTierTwo(edict_t *ent)
 				{
 					ent->client->pers.cash -= 500;
 					ent->client->pers.tierTwoUpgradeLevel = 3;
+					gi.cprintf (ent, PRINT_CHAT, "You upgraded your Chaingun to LVL 3.\n");
 				}
 				else
 					gi.cprintf (ent, PRINT_CHAT, "Not enough dosh.\n");
@@ -1530,6 +1540,7 @@ void Cmd_BuyTierTwo(edict_t *ent)
 				{
 					ent->client->pers.cash -= 300;
 					ent->client->pers.tierTwoUpgradeLevel = 1;
+					gi.cprintf (ent, PRINT_CHAT, "You upgraded your Rocket Launcher to LVL 1.\n");
 				}
 				else
 					gi.cprintf (ent, PRINT_CHAT, "Not enough dosh.\n");
@@ -1542,6 +1553,7 @@ void Cmd_BuyTierTwo(edict_t *ent)
 				{
 					ent->client->pers.cash -= 400;
 					ent->client->pers.tierTwoUpgradeLevel = 2;
+					gi.cprintf (ent, PRINT_CHAT, "You upgraded your Rocket Launcher to LVL 2.\n");
 				}
 				else
 				gi.cprintf (ent, PRINT_CHAT, "Not enough dosh.\n");
@@ -1554,6 +1566,7 @@ void Cmd_BuyTierTwo(edict_t *ent)
 				{
 					ent->client->pers.cash -= 500;
 					ent->client->pers.tierTwoUpgradeLevel = 3;
+					gi.cprintf (ent, PRINT_CHAT, "You upgraded your Rocket Launcher to LVL 3.\n");
 				}
 				else
 					gi.cprintf (ent, PRINT_CHAT, "Not enough dosh.\n");
@@ -1638,9 +1651,9 @@ void Cmd_BuyClassAmmo(edict_t *ent)
 {
 	if(ent->client->pers.playerClass == CLASS_SUPPORT)
 	{
-		if(ent->client->pers.cash >= 25)
+		if(ent->client->pers.cash >= 50)
 		{
-			ent->client->pers.cash -= 25;
+			ent->client->pers.cash -= 50;
 			Cmd_BuyShells(ent);
 		}
 		else
@@ -1649,9 +1662,9 @@ void Cmd_BuyClassAmmo(edict_t *ent)
 	else
 	if( ent->client->pers.playerClass == CLASS_HEAVY)
 	{
-		if(ent->client->pers.cash >= 50)
+		if(ent->client->pers.cash >= 25)
 		{
-			ent->client->pers.cash -= 50;
+			ent->client->pers.cash -= 25;
 			Cmd_BuyBullets(ent);
 		}
 		else
@@ -1660,8 +1673,14 @@ void Cmd_BuyClassAmmo(edict_t *ent)
 	else
 	if(ent->client->pers.playerClass == CLASS_DEMO)
 	{
-		Cmd_BuyGrenades(ent);
-		Cmd_BuyRockets(ent);
+		if(ent->client->pers.cash >= 50)
+		{
+			ent->client->pers.cash -= 50;
+			Cmd_BuyGrenades(ent);
+			Cmd_BuyRockets(ent);
+		}
+		else
+			gi.cprintf (ent, PRINT_CHAT, "Not enough dosh.\n");
 	}
 	else
 	{

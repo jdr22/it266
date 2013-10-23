@@ -1161,7 +1161,7 @@ void soldier_die (edict_t *self, edict_t *inflictor, edict_t *attacker, int dama
 	if (self->deadflag == DEAD_DEAD)
 	{
 		//self->spawnflags |= 2; // i would use this if i dont want em to spawn until some trigger is met
-		SP_monster_infantry (self);
+		//SP_monster_soldier_light(self);
 		
 		return;
 	}
