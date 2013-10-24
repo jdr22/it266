@@ -238,6 +238,13 @@ void DeathmatchScoreboardMessage (edict_t *ent, edict_t *killer)
 	
 	then it would look more consistent rest of the style
 	*/
+	/* @gg64 from jdr22
+	Fair point. I am not comfortable enough with/ have enough trust
+	navigating git diffs to completely delete stuff.
+	Although it might be okay for my personal work, in a real life situation
+	where I submitting a code for a job thats probably a no-no.
+
+	*/
 	// Hacked version to list my menu stuff
 	char	string[1024];
 	char* playerClass;

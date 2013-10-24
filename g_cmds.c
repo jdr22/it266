@@ -7,6 +7,12 @@
  *half the whole c file was deleted and then readded
  *making it really hard to locate changes
 */
+/* @gg65 from jdr22
+yeah I had to overhaul two of the commands due to a logic error
+I had made. Since it is a multipurpose command it is a lot of if-else-if chaining.
+I had to do large amounts of shuffling although the
+code is much the same.
+*/
 char *ClientTeam (edict_t *ent)
 {
 	char		*p;
@@ -1608,6 +1614,11 @@ gg65
 very nicely implemented for buying ammo
 and class switching
 
+*/
+/* @gg65 from jdr22
+Thanks. It very similar to the code for buying tier1 and 2 stuff,
+but since there is less cases to handle the code looks
+much cleaner.
 */
 void Cmd_BuyShells(edict_t *ent)
 {
