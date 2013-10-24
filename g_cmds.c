@@ -1606,6 +1606,7 @@ void Cmd_BuyTierTwo(edict_t *ent)
 /*
 gg65
 very nicely implemented for buying ammo
+and class switching
 
 */
 void Cmd_BuyShells(edict_t *ent)
