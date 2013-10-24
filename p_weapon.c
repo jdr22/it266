@@ -1429,10 +1429,10 @@ void weapon_supershotgun_fire (edict_t *ent)
 			v[YAW]   = ent->client->v_angle[YAW] - 5;
 			v[ROLL]  = ent->client->v_angle[ROLL];
 			AngleVectors (v, forward, NULL, NULL);
-			fire_shotgun (ent, start, forward, damage, kick, DEFAULT_SHOTGUN_HSPREAD + 250, DEFAULT_SHOTGUN_VSPREAD + 100, DEFAULT_SSHOTGUN_COUNT * 2, MOD_SSHOTGUN);
+			fire_shotgun (ent, start, forward, damage, kick, DEFAULT_SHOTGUN_HSPREAD + 250, DEFAULT_SHOTGUN_VSPREAD + 100, DEFAULT_SSHOTGUN_COUNT + 10, MOD_SSHOTGUN);
 			v[YAW]   = ent->client->v_angle[YAW] + 5;
 			AngleVectors (v, forward, NULL, NULL);
-			fire_shotgun (ent, start, forward, damage, kick, DEFAULT_SHOTGUN_HSPREAD + 250, DEFAULT_SHOTGUN_VSPREAD + 100, DEFAULT_SSHOTGUN_COUNT * 2, MOD_SSHOTGUN);
+			fire_shotgun (ent, start, forward, damage, kick, DEFAULT_SHOTGUN_HSPREAD + 250, DEFAULT_SHOTGUN_VSPREAD + 100, DEFAULT_SSHOTGUN_COUNT + 10, MOD_SSHOTGUN);
 		}
 		else
 		if (ent->client->pers.tierTwoUpgradeLevel == 3)
@@ -1441,10 +1441,10 @@ void weapon_supershotgun_fire (edict_t *ent)
 			v[YAW]   = ent->client->v_angle[YAW] - 5;
 			v[ROLL]  = ent->client->v_angle[ROLL];
 			AngleVectors (v, forward, NULL, NULL);
-			fire_shotgun (ent, start, forward, damage, kick, DEFAULT_SHOTGUN_HSPREAD + 500, DEFAULT_SHOTGUN_VSPREAD + 200, DEFAULT_SSHOTGUN_COUNT * 3, MOD_SSHOTGUN);
+			fire_shotgun (ent, start, forward, damage, kick, DEFAULT_SHOTGUN_HSPREAD + 500, DEFAULT_SHOTGUN_VSPREAD + 200, DEFAULT_SSHOTGUN_COUNT + 20, MOD_SSHOTGUN);
 			v[YAW]   = ent->client->v_angle[YAW] + 5;
 			AngleVectors (v, forward, NULL, NULL);
-			fire_shotgun (ent, start, forward, damage, kick, DEFAULT_SHOTGUN_HSPREAD + 500, DEFAULT_SHOTGUN_VSPREAD + 200, DEFAULT_SSHOTGUN_COUNT * 3, MOD_SSHOTGUN);
+			fire_shotgun (ent, start, forward, damage, kick, DEFAULT_SHOTGUN_HSPREAD + 500, DEFAULT_SHOTGUN_VSPREAD + 200, DEFAULT_SSHOTGUN_COUNT + 20, MOD_SSHOTGUN);
 		}
 		else // do default
 		{

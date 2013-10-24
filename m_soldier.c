@@ -1126,7 +1126,6 @@ mframe_t soldier_frames_death6 [] =
 };
 mmove_t soldier_move_death6 = {FRAME_death601, FRAME_death610, soldier_frames_death6, soldier_dead};
 
-void monster_triggered_spawn (edict_t *self);
 
 void soldier_die (edict_t *self, edict_t *inflictor, edict_t *attacker, int damage, vec3_t point)
 {
@@ -1151,18 +1150,28 @@ void soldier_die (edict_t *self, edict_t *inflictor, edict_t *attacker, int dama
 		ThrowGib (self, "models/objects/gibs/chest/tris.md2", damage, GIB_ORGANIC);
 		ThrowHead (self, "models/objects/gibs/head2/tris.md2", damage, GIB_ORGANIC);
 		self->deadflag = DEAD_DEAD;
+
+		//gi.dprintf ("My respawning code is getting called!\n");
+		//self->spawnflags |= 2; // i would use this if i dont want em to spawn until some trigger is met
+		
+		//baby = G_Spawn();
+		//VectorCopy(self->s.origin,baby->s.origin);
+		//G_FreeEdict (self);
+		//SP_monster_soldier_light(baby);
+
 		return;
 	}
 
-	/*
+	
 	if (self->deadflag == DEAD_DEAD)
 		return;
-	*/
+	
 	
 	// hopefully i can figure out some way to respawn
-	
-	if (self->deadflag == DEAD_DEAD)
+	//if (self->deadflag == DEAD_DEAD)
+	/*if (1)
 	{
+		gi.dprintf ("My respawning code is getting called!\n");
 		//self->spawnflags |= 2; // i would use this if i dont want em to spawn until some trigger is met
 		baby = G_Spawn();
 		VectorCopy(self->s.origin,baby->s.origin);
@@ -1170,7 +1179,7 @@ void soldier_die (edict_t *self, edict_t *inflictor, edict_t *attacker, int dama
 		G_FreeEdict (self);
 		
 		return;
-	}
+	}*/
 	
 
 	// regular death

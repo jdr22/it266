@@ -1795,7 +1795,8 @@ void ClientBeginServerFrame (edict_t *ent)
 	}
 
 	// add player trail so monsters can follow
-	//if (!deathmatch->value)
+	// i think i may need to leave this off because I am using too many edicts
+	if (!deathmatch->value)
 		if (!visible (ent, PlayerTrail_LastSpot() ) )
 			PlayerTrail_Add (ent->s.old_origin);
 

@@ -647,7 +647,8 @@ void monster_start_go (edict_t *self)
 			
 		}*/
 		
-		self->monsterinfo.pausetime = 0;
+		//gi.dprintf ("I am standing!\n");
+		self->monsterinfo.pausetime = 5;
 		self->monsterinfo.stand (self);
 		
 	}
