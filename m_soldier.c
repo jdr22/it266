@@ -1126,10 +1126,13 @@ mframe_t soldier_frames_death6 [] =
 };
 mmove_t soldier_move_death6 = {FRAME_death601, FRAME_death610, soldier_frames_death6, soldier_dead};
 
+void monster_triggered_spawn (edict_t *self);
+
 void soldier_die (edict_t *self, edict_t *inflictor, edict_t *attacker, int damage, vec3_t point)
 {
 	int		n;
 	edict_t* enemy;
+	edict_t *baby;
 
 	enemy = self->enemy;
 
@@ -1161,7 +1164,10 @@ void soldier_die (edict_t *self, edict_t *inflictor, edict_t *attacker, int dama
 	if (self->deadflag == DEAD_DEAD)
 	{
 		//self->spawnflags |= 2; // i would use this if i dont want em to spawn until some trigger is met
-		//SP_monster_soldier_light(self);
+		baby = G_Spawn();
+		VectorCopy(self->s.origin,baby->s.origin);
+		SP_monster_soldier_light(baby);
+		G_FreeEdict (self);
 		
 		return;
 	}

@@ -31,8 +31,8 @@ void PlayerTrail_Init (void)
 {
 	int		n;
 
-	if (deathmatch->value /* FIXME || coop */)
-		return;
+	//if (deathmatch->value /* FIXME || coop */)
+	//	return;
 
 	for (n = 0; n < TRAIL_LENGTH; n++)
 	{

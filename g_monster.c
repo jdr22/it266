@@ -640,16 +640,16 @@ void monster_start_go (edict_t *self)
 	}
 	else
 	{
-		if(self)
+		/*if(self)
 		{
 			gi.dprintf ("I am walking!\n");
 			self->monsterinfo.walk(self);
 			
-		}
-		/*
-		self->monsterinfo.pausetime = 100000000;
+		}*/
+		
+		self->monsterinfo.pausetime = 0;
 		self->monsterinfo.stand (self);
-		*/
+		
 	}
 
 	self->think = monster_think;
