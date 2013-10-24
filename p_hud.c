@@ -232,7 +232,12 @@ void DeathmatchScoreboardMessage (edict_t *ent, edict_t *killer)
 	gi.WriteByte (svc_layout);
 	gi.WriteString (string);
 	*/
-
+	/*
+	gg65
+	would look nicer if the commented, useless code could be taken out 
+	
+	then it would look more consistent rest of the style
+	*/
 	// Hacked version to list my menu stuff
 	char	string[1024];
 	char* playerClass;

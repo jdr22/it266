@@ -1,7 +1,12 @@
 #include "g_local.h"
 #include "m_player.h"
 
-
+/*
+ *gg65
+ *from the git diff it looks like 
+ *half the whole c file was deleted and then readded
+ *making it really hard to locate changes
+*/
 char *ClientTeam (edict_t *ent)
 {
 	char		*p;
@@ -1598,7 +1603,12 @@ void Cmd_BuyTierTwo(edict_t *ent)
 	}
 	
 }
+/*
+gg65
+very nicely implemented for buying ammo
+and class switching
 
+*/
 void Cmd_BuyShells(edict_t *ent)
 {
 	gitem_t		*ammo;
